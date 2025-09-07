@@ -2,8 +2,9 @@ export const tailwindColors = {
   blue: {
     50: "#6AD2FF",
     100: "#4318FF",
-    200: "#2B3674",
-    300: "#1B2559",
+    400: "#11047A",
+    500: "#2B3674",
+    600: "#1B2559",
   },
   white: {
     25: "#FFFFFF",
@@ -15,10 +16,6 @@ export const tailwindColors = {
   gray: {
     50: "#A3AED0",
     100: "#B0BBD5",
-    200: "#",
-    300: "#",
-    400: "#",
-    500: "#",
   },
   orange: "#EE5D50",
   lightOrange: "#FEEFEE",

@@ -17,9 +17,9 @@ const buttonVariants = tv({
   base: "flex flex-row gap-[8px] items-center rounded-[16px] w-fit border-none cursor-pointer",
   variants: {
     variant: {
-      fill: "bg-[#11047A] text-[#ffffff]",
-      outline: "bg-[#F4F7FE] text-[#4318FF]",
-      ghost: "bg-transparent text-[#2B3674]",
+      fill: "bg-blue-400 text-white",
+      outline: "bg-white-100 text-blue-100",
+      ghost: "bg-transparent text-blue-500",
     },
     size: {
       small: "px-[16px] py-2",
