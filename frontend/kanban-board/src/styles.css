@@ -1,10 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline: none;
+@theme extend {
+  --color-blue-50: #6ad2ff;
+  --color-blue-100: #4318ff;
+  --color-blue-400: #11047a;
+  --color-blue-500: #2b3674;
+  --color-blue-600: #1b2559;
+
+  --color-white: #ffffff;
+  --color-white-50: #fafcfe;
+  --color-white-100: #f4f7fe;
+  --color-white-200: #e9edf7;
+  --color-white-300: #e0e5f2;
+
+  --color-gray-50: #a3aed0;
+  --color-gray-100: #b0bbd5;
+
+  --color-orange: #ee5d50;
+  --color-light-orange: #feefee;
+  --color-yellow: #ffce20;
+  --color-green: #01b574;
+  --color-light-green: #05cd99;
 }
