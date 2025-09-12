@@ -3,7 +3,7 @@ import type { IIconProps } from "./types.ts";
 
 export const UsersIcon: FC<IIconProps> = (props) => {
   return (
-    <svg width="24" height="24" viewBox="0 0 22 22" {...props}>
+    <svg width="20" height="20" viewBox="0 0 22 22" {...props}>
       <path
         opacity="0.4"
         d="M14.7359 1.83333H17.8397C19.1251 1.83333 20.1666 2.88369 20.1666 4.17996V7.30998C20.1666 8.60625 19.1251 9.65661 17.8397 9.65661H14.7359C13.4504 9.65661 12.4089 8.60625 12.4089 7.30998V4.17996C12.4089 2.88369 13.4504 1.83333 14.7359 1.83333Z"

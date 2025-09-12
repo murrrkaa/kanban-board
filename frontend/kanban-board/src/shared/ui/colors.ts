@@ -22,4 +22,5 @@ export const tailwindColors = {
   yellow: "#FFCE20",
   green: "#01B574",
   lightGreen: "#05CD99",
+  red: "#E31A1A",
 };
