@@ -24,6 +24,8 @@ export class User {
       [name, surname, patronymic, login, password, id_role],
     );
 
+    if (!data.rows.length) throw { status: 404, message: "User Not Created" };
+
     return data.rows[0];
   }
 

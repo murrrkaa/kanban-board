@@ -12,6 +12,10 @@ export class Project {
       `INSERT INTO projects(name, description, created_at, id_created_by) VALUES ($1, $2, $3, $4) RETURNING *`,
       [name, description, created_at, id_created_by],
     );
+
+    if (!data.rows.length)
+      throw { status: 404, message: "Project Not Created" };
+
     return data.rows[0];
   }
 
