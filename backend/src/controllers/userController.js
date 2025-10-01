@@ -20,9 +20,6 @@ export const createUser = requestHandler(async (req, res) => {
 export const deleteUser = requestHandler(async (req, res) => {
   const { id: id_user } = req.params;
   const data = await User.deleteUser(id_user);
-
-  if (!data) throw { status: 404, message: "User not found" };
-
   return {
     status: 200,
     data,
@@ -32,9 +29,6 @@ export const deleteUser = requestHandler(async (req, res) => {
 export const getUser = requestHandler(async (req, res) => {
   const { id: id_user } = req.params;
   const data = await User.getUser(id_user);
-
-  if (!data) throw { status: 404, message: "User not found" };
-
   return {
     status: 200,
     data,

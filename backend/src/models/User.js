@@ -32,6 +32,9 @@ export class User {
       `DELETE FROM users WHERE id_user=$1 RETURNING *`,
       [id_user],
     );
+
+    if (!data.rows.length) throw { status: 404, message: "User Not Found" };
+
     return data.rows[0];
   }
 
@@ -39,6 +42,9 @@ export class User {
     const data = await pool.query(`SELECT * FROM users WHERE id_user=$1`, [
       id_user,
     ]);
+
+    if (!data.rows.length) throw { status: 404, message: "User Not Found" };
+
     return data.rows[0];
   }
 
