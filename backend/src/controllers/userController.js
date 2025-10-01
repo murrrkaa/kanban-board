@@ -1,43 +1,42 @@
 import { User } from "../models/User.js";
+import { requestHandler } from "../helpers/requestHandler.js";
 
-export const getUsers = async (req, res) => {
-  try {
-    const data = await User.getUsers();
-    return res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-};
+export const getUsers = requestHandler(async (req, res) => {
+  const data = await User.getUsers();
+  return {
+    status: 200,
+    data,
+  };
+});
 
-export const createUser = async (req, res) => {
-  try {
-    const data = await User.createUser(req.body);
-    return res.status(201).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-};
+export const createUser = requestHandler(async (req, res) => {
+  const data = await User.createUser(req.body);
+  return {
+    status: 201,
+    data,
+  };
+});
 
-export const deleteUser = async (req, res) => {
-  try {
-    const { id: id_user } = req.params;
-    const data = await User.deleteUser(id_user);
+export const deleteUser = requestHandler(async (req, res) => {
+  const { id: id_user } = req.params;
+  const data = await User.deleteUser(id_user);
 
-    if (!data) return res.status(404).json({ error: "User not found" });
+  if (!data) throw { status: 404, message: "User not found" };
 
-    return res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-};
+  return {
+    status: 200,
+    data,
+  };
+});
 
-export const getUser = async (req, res) => {
-  try {
-    const { id: id_user } = req.params;
-    if (!id_user) return res.status(404).json({ error: "Not found id_user" });
-    const data = await User.getUser(id_user);
-    return res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-};
+export const getUser = requestHandler(async (req, res) => {
+  const { id: id_user } = req.params;
+  const data = await User.getUser(id_user);
+
+  if (!data) throw { status: 404, message: "User not found" };
+
+  return {
+    status: 200,
+    data,
+  };
+});
