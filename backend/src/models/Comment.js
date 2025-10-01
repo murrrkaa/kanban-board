@@ -16,8 +16,7 @@ export class Comment {
       [content, created_at, id_task, id_author],
     );
 
-    if (!data.rows[0]?.length)
-      throw { status: 404, message: "Comment Not Found" };
+    if (!data.rows.length) throw { status: 404, message: "Comment Not Found" };
 
     return data.rows[0];
   }
@@ -26,8 +25,7 @@ export class Comment {
       id_comment,
     ]);
 
-    if (!data.rows[0]?.length)
-      throw { status: 404, message: "Comment Not Found" };
+    if (!data.rows.length) throw { status: 404, message: "Comment Not Found" };
 
     return data.rows[0];
   }
