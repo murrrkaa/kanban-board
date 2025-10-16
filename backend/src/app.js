@@ -7,6 +7,7 @@ import { projectRouter } from "./routes/projectRoutes.js";
 import { commentRouter } from "./routes/commentRoutes.js";
 import { dashboardRoutes } from "./routes/dashboardRoutes.js";
 import { roleRouter } from "./routes/roleRoute.js";
+import { taskRouter } from "./routes/taskRoute.js";
 dotenv.config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/users", userRouter);
 app.use("/api/roles", roleRouter);
 app.use("/api/projects", projectRouter);
 app.use("/api/dashboards", dashboardRoutes);
+app.use("/api/task", taskRouter);
 app.use("/api/tasks/:id/comments", commentRouter);
 
 app.use((err, req, res, next) => errorHandler(err, req, res, next));
