@@ -1,4 +1,4 @@
-import { type FC, JSX } from "react";
+import { type FC, type JSX } from "react";
 import { cn } from "@shared/lib/cn.ts";
 import * as React from "react";
 
