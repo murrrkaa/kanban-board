@@ -68,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             onChange={handleChangeInput}
             placeholder={placeholder}
             className={cn(
-              "text-ellipsis text-[14px] flex items-center px-4 w-full h-[45px] rounded-[24px] border border-gray-50 bg-white-25 outline-none focus:border-blue-100 hover:border-blue-100 placeholder:text-gray-50",
+              "text-ellipsis text-[14px] flex items-center px-4 w-full h-[45px] rounded-[12px] border border-gray-50 bg-white-25 outline-none focus:border-blue-100 hover:border-blue-100 placeholder:text-gray-50",
               inputSizeClassName[inputSize],
               leftSlot && "pl-[40px]",
               rightSlot && "pr-[40px]",

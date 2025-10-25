@@ -14,7 +14,7 @@ export interface IButtonProps
 }
 
 const buttonVariants = tv({
-  base: "flex flex-row gap-[8px] items-center rounded-[16px] w-fit border-none cursor-pointer",
+  base: "flex flex-row gap-[8px] items-center rounded-[16px] w-fit border-none cursor-pointer justify-center font-bold",
   variants: {
     variant: {
       fill: "bg-blue-400 text-white",
