@@ -5,8 +5,10 @@ import { useForm, Controller } from "react-hook-form";
 import type { SignInFormData } from "@features/sign-in/model/types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInScheme } from "@features/sign-in/model/resolver.ts";
+import { useLogin } from "@features/sign-in/model/use-login.tsx";
 
 export const SignInForm = () => {
+  const { mutate: login } = useLogin();
   const {
     control,
     handleSubmit,
@@ -20,8 +22,9 @@ export const SignInForm = () => {
   });
 
   const onSubmit = (data: SignInFormData) => {
-    console.log(data);
+    login(data);
   };
+
   return (
     <div className="flex flex-col gap-[16px]">
       <Controller
