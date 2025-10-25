@@ -1,19 +1,23 @@
 import { Navbar } from "@widgets/navbar/ui";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { RoutesEnum } from "@shared/routes";
+import { SignInPage } from "@/pages/sign-in/ui";
 function App() {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const isSignOut = pathname.includes(RoutesEnum.SIGN_OUT);
   return (
-    <BrowserRouter>
-      <Navbar />
+    <div className="flex flex-row">
+      {!isSignOut && <Navbar />}
       <Routes>
         <Route path="/" element={<></>} /> {/*Перенапраление в профиль*/}
         <Route path={RoutesEnum.PROJECTS} element={<></>} />
         <Route path={RoutesEnum.TASKS} element={<></>} />
         <Route path={RoutesEnum.USERS} element={<></>} />
         <Route path={RoutesEnum.PROFILE} element={<></>} />
-        <Route path={RoutesEnum.SIGN_OUT} element={<></>} />
+        <Route path={RoutesEnum.SIGN_OUT} element={<SignInPage />} />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 
