@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             <Label.Label
               htmlFor={inputId}
               className={cn(
-                "font-medium text-blue-500 text-[16px]",
+                "font-medium text-blue-500 text-[16px] mb-3",
                 inputSize === "small" && "text-[14px]",
                 classNames?.labelClassName,
               )}
