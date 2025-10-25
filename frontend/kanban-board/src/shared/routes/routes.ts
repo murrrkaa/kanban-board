@@ -4,5 +4,5 @@ export enum RoutesEnum {
   TASKS = "/tasks",
   USERS = "/users",
   PROFILE = "/profile",
-  SIGN_OUT = "/sign-out",
+  LOGIN = "/login",
 }
