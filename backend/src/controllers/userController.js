@@ -1,5 +1,6 @@
 import { User } from "../models/User.js";
 import { requestHandler } from "../helpers/requestHandler.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = requestHandler(async (req, res) => {
   const data = await User.getUsers();
@@ -10,7 +11,12 @@ export const getUsers = requestHandler(async (req, res) => {
 });
 
 export const createUser = requestHandler(async (req, res) => {
-  const data = await User.createUser(req.body);
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+  const data = await User.createUser({
+    ...req.body,
+    password: hashedPassword,
+  });
   return {
     status: 201,
     data,
