@@ -1,7 +1,7 @@
 import { Navbar } from "@widgets/navbar/ui";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { RoutesEnum } from "@shared/routes";
-import { SignIn } from "@/pages/sign-in/ui";
+import { SignInPage } from "@/pages/sign-in/ui";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -15,7 +15,7 @@ function App() {
         <Route path={RoutesEnum.TASKS} element={<></>} />
         <Route path={RoutesEnum.USERS} element={<></>} />
         <Route path={RoutesEnum.PROFILE} element={<></>} />
-        <Route path={RoutesEnum.SIGN_OUT} element={<SignIn />} />
+        <Route path={RoutesEnum.SIGN_OUT} element={<SignInPage />} />
       </Routes>
     </div>
   );
