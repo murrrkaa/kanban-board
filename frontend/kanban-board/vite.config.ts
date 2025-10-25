@@ -15,4 +15,8 @@ export default defineConfig({
       "@widgets": path.resolve(__dirname, "src/widgets"),
     },
   },
+  server: {
+    port: 5173,
+    strictPort: true,
+  },
 });

@@ -20,5 +20,5 @@ export const links: IRoute[] = [
   { name: "Tasks", route: RoutesEnum.TASKS, icon: TasksIcon },
   { name: "Users", route: RoutesEnum.USERS, icon: UsersIcon },
   { name: "Profile", route: RoutesEnum.PROFILE, icon: ProfileIcon },
-  { name: "Sign Out", route: RoutesEnum.SIGN_OUT, icon: SignOutIcon },
+  { name: "Sign Out", route: RoutesEnum.LOGIN, icon: SignOutIcon },
 ];
