@@ -50,6 +50,16 @@ export class User {
     return data.rows[0];
   }
 
+  static async getUserByLogin(login) {
+    const data = await pool.query(`SELECT * FROM users WHERE login=$1`, [
+      login,
+    ]);
+
+    if (!data.rows.length) throw { status: 404, message: "Invalid login" };
+
+    return data.rows[0];
+  }
+
   // static async updateUser({ id_user, params }) {
   //   const { field, value } = params;
   //   const data = await pool.query(

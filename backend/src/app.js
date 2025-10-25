@@ -8,6 +8,8 @@ import { commentRouter } from "./routes/commentRoutes.js";
 import { dashboardRoutes } from "./routes/dashboardRoutes.js";
 import { roleRouter } from "./routes/roleRoute.js";
 import { taskRouter } from "./routes/taskRoute.js";
+import { loginRouter } from "./routes/loginRoutes.js";
+import { authMiddleware } from "./middleware/authMiddleware/authMiddleware.js";
 dotenv.config();
 
 const app = express();
@@ -19,12 +21,13 @@ app.use(
   }),
 );
 
-app.use("/api/users", userRouter);
-app.use("/api/roles", roleRouter);
-app.use("/api/projects", projectRouter);
-app.use("/api/dashboards", dashboardRoutes);
-app.use("/api/task", taskRouter);
-app.use("/api/tasks/:id/comments", commentRouter);
+app.use("/api/users", authMiddleware, userRouter);
+app.use("/api/roles", authMiddleware, roleRouter);
+app.use("/api/projects", authMiddleware, projectRouter);
+app.use("/api/dashboards", authMiddleware, dashboardRoutes);
+app.use("/api/task", authMiddleware, taskRouter);
+app.use("/api/tasks/:id/comments", authMiddleware, commentRouter);
+app.use("/api/login", loginRouter);
 
 app.use((err, req, res, next) => errorHandler(err, req, res, next));
 
