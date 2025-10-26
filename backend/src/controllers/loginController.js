@@ -24,7 +24,6 @@ export const loginUser = requestHandler(async (req, res) => {
     data: {
       message: "Успешный вход",
       token,
-      userId: user.id_user,
     },
   };
 });
