@@ -10,7 +10,7 @@ export const useLogin = () => {
     mutationKey: [RoutesEnum.LOGIN],
     mutationFn: postLogin,
     onError: (error) => console.log(error),
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       const { token } = data;
       setAccessToken(token);
 
