@@ -1,5 +1,14 @@
 import type { JwtPayload } from "jwt-decode";
 
+export interface IUserDto {
+  id_role: string;
+  id_user: string;
+  name: string;
+  surname: string;
+  patronymic: string;
+  login: string;
+}
+
 export interface IUser {
   id: string;
   name: string;
