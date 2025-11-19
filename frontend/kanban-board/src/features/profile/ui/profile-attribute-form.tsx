@@ -2,21 +2,16 @@ import { EditAttribute } from "@shared/ui/components/edit-attribute/ui";
 import type { IUser } from "@entities/auth/model/types.ts";
 import type { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
+import type { IFormData } from "@features/profile/model/types.ts";
+import { useUpdateUser } from "@features/profile/model/use-update-user.tsx";
 
 interface IProps {
-  userInfo: IUser | null;
-}
-
-interface IFormData {
-  name: string;
-  surname: string;
-  patronymic: string;
-  login: string;
+  userInfo: IUser;
 }
 
 export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
-  console.log(userInfo);
-  const { control } = useForm<IFormData>({
+  const { mutate: updateUser } = useUpdateUser();
+  const { control, getValues } = useForm<IFormData>({
     defaultValues: {
       name: userInfo?.name,
       surname: userInfo?.surname,
@@ -24,6 +19,16 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
       login: userInfo?.login,
     },
   });
+
+  const onChangeHandler = () => {
+    const formData: IFormData = {
+      ...getValues(),
+      id_user: userInfo.id,
+      id_role: userInfo.roleId,
+    };
+
+    updateUser(formData);
+  };
   return (
     <div className="w-full p-[30px] mt-[20px] flex flex-col">
       <Controller
@@ -31,7 +36,10 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Имя"
             value={field.value}
-            onChange={field.onChange}
+            onChange={() => {
+              field.onChange;
+              onChangeHandler();
+            }}
           />
         )}
         name="name"
@@ -42,7 +50,10 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Фамилия"
             value={field.value}
-            onChange={field.onChange}
+            onChange={() => {
+              field.onChange;
+              onChangeHandler();
+            }}
           />
         )}
         name="surname"
@@ -53,7 +64,10 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Отчество"
             value={field.value}
-            onChange={field.onChange}
+            onChange={() => {
+              field.onChange;
+              onChangeHandler();
+            }}
           />
         )}
         name="patronymic"
@@ -64,7 +78,10 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Логин"
             value={field.value}
-            onChange={field.onChange}
+            onChange={() => {
+              field.onChange;
+              onChangeHandler();
+            }}
           />
         )}
         name="login"
