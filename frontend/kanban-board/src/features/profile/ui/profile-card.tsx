@@ -4,9 +4,8 @@ import { Title } from "@shared/ui/components/title";
 import { ProfileAttributeForm } from "@features/profile/ui/profile-attribute-form.tsx";
 
 export const ProfileCard = () => {
-  const user = useAuthStore.getState().user;
+  const user = useAuthStore((state) => state.user);
   const userInitials = `${user?.name?.[0]}.${user?.surname?.[0] ?? ""}. `;
-  const userName = `${user?.name} ${user?.surname ?? ""}`;
 
   return (
     <div className="w-[50%] min-w-[560px] bg-white rounded-[20px] h-[calc(100vh-200px)] min-h-fit">
@@ -18,9 +17,14 @@ export const ProfileCard = () => {
       </div>
       <Title
         size="xs"
-        className="w-full flex items-center justify-center mt-[30px]"
+        className="mx-auto w-[500px] flex items-center justify-center mt-[30px]"
       >
-        {userName}
+        <div className="max-w-[50%] text-ellipsis overflow-hidden">
+          {user?.name}&ensp;
+        </div>
+        <div className="max-w-[50%] text-ellipsis overflow-hidden">
+          {user?.surname ?? ""}
+        </div>
       </Title>
       <ProfileAttributeForm userInfo={user} />
     </div>

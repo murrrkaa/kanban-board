@@ -26,7 +26,6 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
       id_user: userInfo!.id,
       id_role: userInfo!.roleId,
     };
-
     updateUser(formData);
   };
   return (
@@ -36,8 +35,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Имя"
             value={field.value}
-            onChange={() => {
-              field.onChange;
+            onChange={(value) => {
+              field.onChange(value);
               onChangeHandler();
             }}
           />
@@ -50,8 +49,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Фамилия"
             value={field.value}
-            onChange={() => {
-              field.onChange;
+            onChange={(value) => {
+              field.onChange(value);
               onChangeHandler();
             }}
           />
@@ -64,8 +63,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Отчество"
             value={field.value}
-            onChange={() => {
-              field.onChange;
+            onChange={(value) => {
+              field.onChange(value);
               onChangeHandler();
             }}
           />
@@ -78,8 +77,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
           <EditAttribute
             label="Логин"
             value={field.value}
-            onChange={() => {
-              field.onChange;
+            onChange={(value) => {
+              field.onChange(value);
               onChangeHandler();
             }}
           />
