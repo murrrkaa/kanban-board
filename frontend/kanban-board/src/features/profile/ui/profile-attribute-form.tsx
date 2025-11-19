@@ -44,7 +44,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
         render={({ field }) => (
           <EditAttribute
             label="Фамилия"
-            value={field.value}
+            value={field.value ?? ""}
             onChange={(value) => {
               field.onChange(value);
               onChangeHandler(field.name, value);
@@ -58,7 +58,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
         render={({ field }) => (
           <EditAttribute
             label="Отчество"
-            value={field.value}
+            value={field.value ?? ""}
             onChange={(value) => {
               field.onChange(value);
               onChangeHandler(field.name, value);
