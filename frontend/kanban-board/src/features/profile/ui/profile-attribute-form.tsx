@@ -11,7 +11,7 @@ interface IProps {
 
 export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
   const { mutate: updateUser } = useUpdateUser();
-  const { control, getValues } = useForm<IFormData>({
+  const { control } = useForm<IFormData>({
     defaultValues: {
       name: userInfo?.name,
       surname: userInfo?.surname,
@@ -20,13 +20,9 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
     },
   });
 
-  const onChangeHandler = () => {
-    const formData: IFormData = {
-      ...getValues(),
-      id_user: userInfo!.id,
-      id_role: userInfo!.roleId,
-    };
-    updateUser(formData);
+  const onChangeHandler = (field: keyof IFormData, value: string) => {
+    if (userInfo?.[field] === value) return;
+    updateUser({ field, value });
   };
   return (
     <div className="w-full p-[30px] mt-[20px] flex flex-col">
@@ -37,7 +33,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler();
+              onChangeHandler(field.name, value);
             }}
           />
         )}
@@ -51,7 +47,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler();
+              onChangeHandler(field.name, value);
             }}
           />
         )}
@@ -65,7 +61,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler();
+              onChangeHandler(field.name, value);
             }}
           />
         )}
@@ -79,7 +75,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler();
+              onChangeHandler(field.name, value);
             }}
           />
         )}
