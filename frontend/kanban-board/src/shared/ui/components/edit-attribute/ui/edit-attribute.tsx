@@ -2,7 +2,7 @@ import { type ChangeEvent, type FC, useState } from "react";
 import { Input } from "@shared/ui/components/input";
 import { cn } from "@shared/lib/cn.ts";
 
-interface IAttribute {
+export interface IAttribute {
   label: string;
   value: string;
   onChange: (value: string) => void;
@@ -14,7 +14,11 @@ export const EditAttribute: FC<IAttribute> = ({ label, value, onChange }) => {
 
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
     setVal(event.target.value);
-    onChange(event.target.value);
+  };
+
+  const onBlurHandler = () => {
+    onChange(val);
+    setEditable(false);
   };
 
   return (
@@ -25,9 +29,10 @@ export const EditAttribute: FC<IAttribute> = ({ label, value, onChange }) => {
       <div
         className={cn("basis-1/2 w-full", editable && "border border-blue-400")}
         onClick={() => setEditable(!editable)}
-        onBlur={() => setEditable(false)}
+        onBlur={onBlurHandler}
       >
         <Input
+          placeholder=""
           inputSize="small"
           value={val}
           classNames={{
