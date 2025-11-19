@@ -17,6 +17,7 @@ function App() {
           {!isSignOut && <Navbar />}
           <Routes>
             <Route path="/" element={<Redirect />} />
+            <Route path={RoutesEnum.DASHBOARDS} element={<></>} />
             <Route path={RoutesEnum.PROJECTS} element={<></>} />
             <Route path={RoutesEnum.TASKS} element={<></>} />
             <Route path={RoutesEnum.USERS} element={<></>} />
