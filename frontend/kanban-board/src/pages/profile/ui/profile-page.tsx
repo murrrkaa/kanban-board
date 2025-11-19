@@ -1,5 +1,5 @@
 import { PageWrapper } from "@shared/ui/components/page-wrapper";
-import { ProfileCard } from "@/pages/profile/ui/profile-card.tsx";
+import { ProfileCard } from "@features/profile/ui";
 
 export const ProfilePage = () => {
   return (

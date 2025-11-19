@@ -1,12 +1,9 @@
 import { useAuthStore } from "@entities/auth/model/use-auth-store.ts";
 import { profile } from "@shared/ui/image/profile/profile.ts";
 import { Title } from "@shared/ui/components/title";
-import { EditAttribute } from "@shared/ui/components/edit-attribute/ui";
-import { useState } from "react";
+import { ProfileAttributeForm } from "@features/profile/ui/profile-attribute-form.tsx";
 
 export const ProfileCard = () => {
-  const [editableLabel, setEditableLabel] = useState("");
-
   const user = useAuthStore.getState().user;
   const userInitials = `${user?.name[0]}.${user?.surname?.[0] ?? ""}. `;
   const userName = `${user?.name} ${user?.surname ?? ""}`;
@@ -25,32 +22,7 @@ export const ProfileCard = () => {
       >
         {userName}
       </Title>
-      <div className="w-full p-[30px] mt-[20px] flex flex-col">
-        <EditAttribute
-          label="Имя"
-          value="Egorova"
-          editableLabel={editableLabel}
-          onChangeMode={setEditableLabel}
-        />
-        <EditAttribute
-          label="Фамилия"
-          value="Egorova"
-          editableLabel={editableLabel}
-          onChangeMode={setEditableLabel}
-        />
-        <EditAttribute
-          label="Отчество"
-          value="Egorova"
-          editableLabel={editableLabel}
-          onChangeMode={setEditableLabel}
-        />
-        <EditAttribute
-          label="Логин"
-          value="Egorova"
-          editableLabel={editableLabel}
-          onChangeMode={setEditableLabel}
-        />
-      </div>
+      <ProfileAttributeForm userInfo={user} />
     </div>
   );
 };
