@@ -40,11 +40,3 @@ export const getUser = requestHandler(async (req, res) => {
     data,
   };
 });
-
-export const updateUser = requestHandler(async (req, res) => {
-  const data = await User.updateUser(req.body);
-  return {
-    status: 200,
-    data,
-  };
-});

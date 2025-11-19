@@ -4,7 +4,6 @@ import {
   deleteUser,
   getUser,
   getUsers,
-  updateUser,
 } from "../controllers/userController.js";
 import { permitMiddleware } from "../middleware/permitMiddleware/permitMiddleware.js";
 
@@ -15,6 +14,5 @@ router.post("/", permitMiddleware("admin"), createUser);
 router.delete("/:id", permitMiddleware("admin"), deleteUser);
 
 router.get("/:id", getUser);
-router.put("/:id", updateUser);
 
 export const userRouter = router;
