@@ -44,7 +44,7 @@ export class User {
 
   static async getUser(id_user) {
     const data = await pool.query(
-      `SELECT user_id, name, surname, patronymic, login, id_role FROM users WHERE id_user=$1`,
+      `SELECT id_user, name, surname, patronymic, login, id_role FROM users WHERE id_user=$1`,
       [id_user],
     );
 

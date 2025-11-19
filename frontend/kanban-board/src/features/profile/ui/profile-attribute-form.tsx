@@ -6,7 +6,7 @@ import type { IFormData } from "@features/profile/model/types.ts";
 import { useUpdateUser } from "@features/profile/model/use-update-user.tsx";
 
 interface IProps {
-  userInfo: IUser;
+  userInfo: IUser | null;
 }
 
 export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
@@ -23,8 +23,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
   const onChangeHandler = () => {
     const formData: IFormData = {
       ...getValues(),
-      id_user: userInfo.id,
-      id_role: userInfo.roleId,
+      id_user: userInfo!.id,
+      id_role: userInfo!.roleId,
     };
 
     updateUser(formData);
