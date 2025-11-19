@@ -63,11 +63,31 @@ export class User {
     return data.rows[0];
   }
 
-  // static async updateUser({ id_user, params }) {
-  //   const { field, value } = params;
-  //   const data = await pool.query(
-  //     `UPDATE users SET ${field}=$1 WHERE id_user=$2`,
-  //     [value, id_user],
-  //   );
-  // } доделать редактирование юзеров
+  static async updateUser(form) {
+    const updatedData = {
+      name: form.name,
+      surname: form.surname,
+      patronymic: form.patronymic,
+      login: form.login,
+      id_role: form.id_role,
+    };
+
+    const id_user = form.id_user;
+
+    const data = await pool.query(
+      `UPDATE users SET name=$1, surname=$2, patronymic=$3, login=$4, id_role=$5 WHERE id_user=$6 RETURNING id_user, name, surname, patronymic, login, id_role`,
+      [
+        updatedData.name,
+        updatedData.surname,
+        updatedData.patronymic,
+        updatedData.login,
+        updatedData.id_role,
+        id_user,
+      ],
+    );
+
+    if (!data.rows[0]) throw { status: 400, message: "Invalid data" };
+
+    return data.rows[0];
+  }
 }
