@@ -4,6 +4,8 @@ import type { FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { IFormData } from "@features/profile/model/types.ts";
 import { useUpdateUser } from "@features/profile/model/use-update-user.tsx";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { profileScheme } from "@features/profile/model/scheme.ts";
 
 interface IProps {
   userInfo: IUser | null;
@@ -11,7 +13,12 @@ interface IProps {
 
 export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
   const { mutate: updateUser } = useUpdateUser();
-  const { control } = useForm<IFormData>({
+  const {
+    control,
+    formState: { errors },
+    trigger,
+  } = useForm<IFormData>({
+    resolver: zodResolver(profileScheme),
     defaultValues: {
       name: userInfo?.name,
       surname: userInfo?.surname,
@@ -19,10 +26,10 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
       login: userInfo?.login,
     },
   });
-
-  const onChangeHandler = (field: keyof IFormData, value: string) => {
+  const onSubmitData = async (field: keyof IFormData, value: string) => {
     if (userInfo?.[field] === value) return;
-    updateUser({ field, value });
+    const isValid = await trigger(field);
+    if (isValid) updateUser({ field, value });
   };
   return (
     <div className="w-full p-[30px] mt-[20px] flex flex-col">
@@ -33,8 +40,9 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler(field.name, value);
             }}
+            onBlur={(value) => onSubmitData(field.name, value)}
+            error={errors?.name?.message}
           />
         )}
         name="name"
@@ -47,8 +55,9 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value ?? ""}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler(field.name, value);
             }}
+            onBlur={(value) => onSubmitData(field.name, value)}
+            error={errors?.surname?.message}
           />
         )}
         name="surname"
@@ -61,8 +70,9 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value ?? ""}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler(field.name, value);
             }}
+            onBlur={(value) => onSubmitData(field.name, value)}
+            error={errors?.patronymic?.message}
           />
         )}
         name="patronymic"
@@ -75,8 +85,9 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
             value={field.value}
             onChange={(value) => {
               field.onChange(value);
-              onChangeHandler(field.name, value);
             }}
+            onBlur={(value) => onSubmitData(field.name, value)}
+            error={errors?.login?.message}
           />
         )}
         name="login"
