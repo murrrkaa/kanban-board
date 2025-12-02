@@ -12,7 +12,7 @@ export interface IUserDto {
 export interface IUser {
   id: string;
   name: string;
-  surname?: string;
+  surname: string;
   patronymic?: string;
   login: string;
   roleId: string;
