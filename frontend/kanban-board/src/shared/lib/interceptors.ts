@@ -1,9 +1,14 @@
-import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import type {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { getAccessToken } from "@shared/lib/auth.ts";
 
 export const onResolveInterceptor = (response: AxiosResponse) =>
   Promise.resolve(response.data);
-export const onRejectInterceptor = () => {};
+export const onRejectInterceptor = (error: AxiosError) =>
+  Promise.reject(error.response?.data);
 
 export const onResolveAuth = (config: InternalAxiosRequestConfig) => {
   const token = getAccessToken();
