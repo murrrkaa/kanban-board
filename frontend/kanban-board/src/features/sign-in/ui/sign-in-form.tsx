@@ -8,16 +8,26 @@ import { signInScheme } from "@features/sign-in/model/resolver.ts";
 import { useLogin } from "@features/sign-in/model/use-login.tsx";
 
 export const SignInForm = () => {
-  const { mutate: login } = useLogin();
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<SignInFormData>({
     resolver: zodResolver(signInScheme),
     defaultValues: {
       login: "",
       password: "",
+    },
+  });
+
+  const { mutate: login } = useLogin({
+    onErrorHandler: (error) => {
+      if (error.error.includes("login"))
+        setError("login", { message: error.error });
+
+      if (error.error.includes("password"))
+        setError("password", { message: error.error });
     },
   });
 

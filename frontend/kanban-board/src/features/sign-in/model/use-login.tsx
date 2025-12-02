@@ -5,20 +5,30 @@ import { setAccessToken } from "@shared/lib/auth.ts";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@entities/auth/model/use-auth.ts";
 
-export const useLogin = () => {
+interface IError {
+  error: string;
+}
+
+export const useLogin = ({
+  onErrorHandler,
+}: {
+  onErrorHandler: (error: IError) => void;
+}) => {
   const navigate = useNavigate();
   const { checkAuth } = useAuth();
   return useMutation({
     mutationKey: [RoutesEnum.LOGIN],
     mutationFn: postLogin,
-    onError: (error) => console.log(error),
+    onError: onErrorHandler,
     onSuccess: async (data) => {
-      const { token } = data;
-      setAccessToken(token);
+      if (data) {
+        const { token } = data;
+        setAccessToken(token);
 
-      await checkAuth();
+        await checkAuth();
 
-      navigate(RoutesEnum.PROFILE);
+        navigate(RoutesEnum.PROFILE);
+      }
     },
   });
 };
