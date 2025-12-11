@@ -8,7 +8,7 @@ interface ITableWrapperProps {
 
 export const TableWrapper: FC<ITableWrapperProps> = ({ children, title }) => {
   return (
-    <div className="w-full h-[calc(100vh-133px)] bg-white rounded-[20px]">
+    <div className="w-full h-[calc(100vh-133px)] bg-white rounded-[20px] overflow-x-hidden overflow-y-scroll scrollbar">
       {title && (
         <Title className="pt-5 pl-7" size="md">
           {title}
