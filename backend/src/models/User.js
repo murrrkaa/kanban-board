@@ -22,7 +22,7 @@ export class User {
         patronymic,
         login,
         password,
-        id_role) VALUES($1, $2, $3, $4, $5, $6) RETURNING user_id, name, surname, patronymic, login, id_role`,
+        id_role) VALUES($1, $2, $3, $4, $5, $6) RETURNING id_user, name, surname, patronymic, login, id_role`,
       [name, surname, patronymic, login, password, id_role],
     );
 
@@ -33,7 +33,7 @@ export class User {
 
   static async deleteUser(id_user) {
     const data = await pool.query(
-      `DELETE FROM users WHERE id_user=$1 RETURNING user_id, name, surname, patronymic, login, id_role`,
+      `DELETE FROM users WHERE id_user=$1 RETURNING id_user, name, surname, patronymic, login, id_role`,
       [id_user],
     );
 
