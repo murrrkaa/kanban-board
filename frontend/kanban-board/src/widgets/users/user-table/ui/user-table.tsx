@@ -17,7 +17,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { columns } from "@widgets/users/user-table/model/columns.ts";
+import { columns } from "@widgets/users/user-table/model/columns.tsx";
 import type { IUser } from "@entities/auth/model/types.ts";
 
 export const UserTable = () => {
@@ -43,18 +43,23 @@ export const UserTable = () => {
     <TableWrapper title="Users List Table">
       <Table>
         <TableHead>
-          {table.getHeaderGroups()[0].headers.map((header) => (
-            <TableHeaderCell key={header.id} className="pl-[10px]">
-              {flexRender(header.column.columnDef.header, header.getContext())}
-            </TableHeaderCell>
-          ))}
+          <TableRow>
+            {table.getHeaderGroups()[0].headers.map((header) => (
+              <TableHeaderCell key={header.id} className="pl-[10px]">
+                {flexRender(
+                  header.column.columnDef.header,
+                  header.getContext(),
+                )}
+              </TableHeaderCell>
+            ))}
+          </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell: Cell<IUser, any>) => (
                 <TableCell key={cell.id} className="p-[10px]">
-                  {cell.getValue()}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
             </TableRow>
