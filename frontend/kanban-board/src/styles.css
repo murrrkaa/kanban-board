@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme extend {
   --color-blue-50: #6ad2ff;
