@@ -5,13 +5,17 @@ import { Button } from "@shared/ui/components/button";
 import { Controller, useForm } from "react-hook-form";
 import type { IUserFormData } from "@features/user/edit-user/model/types.ts";
 import { useUpdateUser } from "@features/user/edit-user/model/use-update-user.tsx";
+import { useQueryClient } from "@tanstack/react-query";
+import { RoutesEnum } from "@shared/routes";
 
 interface IEditUserForm {
   user: IUser;
+  setOpen: (open: boolean) => void;
 }
 
-export const EditUserForm: FC<IEditUserForm> = ({ user }) => {
-  const { mutate: updateUser } = useUpdateUser();
+export const EditUserForm: FC<IEditUserForm> = ({ user, setOpen }) => {
+  const { mutateAsync: updateUser } = useUpdateUser();
+  const queryClient = useQueryClient();
   const {
     control,
     handleSubmit,
@@ -26,14 +30,20 @@ export const EditUserForm: FC<IEditUserForm> = ({ user }) => {
     },
   });
 
-  const onSubmit = (data: IUserFormData) => {
-    updateUser({
+  const onSubmit = async (data: IUserFormData) => {
+    await updateUser({
       id: user.id,
       data: {
         ...data,
         roleId: user.roleId,
       },
     }); //TODO доделать выбор роли
+
+    queryClient.invalidateQueries({
+      queryKey: [RoutesEnum.USERS],
+    });
+
+    setOpen(false);
   };
   return (
     <div className="h-full">
