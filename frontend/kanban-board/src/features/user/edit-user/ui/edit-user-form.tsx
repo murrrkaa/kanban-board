@@ -1,5 +1,3 @@
-import type { IUser } from "@entities/auth/model/types.ts";
-import { type FC } from "react";
 import { Input } from "@shared/ui/components/input";
 import { Button } from "@shared/ui/components/button";
 import { Controller, useForm } from "react-hook-form";
@@ -7,43 +5,50 @@ import type { IUserFormData } from "@features/user/edit-user/model/types.ts";
 import { useUpdateUser } from "@features/user/edit-user/model/use-update-user.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
+import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
+import { useShallow } from "zustand/react/shallow";
 
-interface IEditUserForm {
-  user: IUser;
-  setOpen: (open: boolean) => void;
-}
-
-export const EditUserForm: FC<IEditUserForm> = ({ user, setOpen }) => {
+export const EditUserForm = () => {
   const { mutateAsync: updateUser } = useUpdateUser();
   const queryClient = useQueryClient();
+
+  const { setOpenDialog, user } = useUserDialogStore(
+    useShallow((state) => ({
+      open: state.openEditDialog,
+      setOpenDialog: state.setOpenEditDialog,
+      user: state.user,
+    })),
+  );
+
   const {
     control,
     handleSubmit,
     formState: { isDirty },
   } = useForm<IUserFormData>({
     defaultValues: {
-      name: user.name,
-      surname: user.surname,
-      login: user.login,
-      patronymic: user.patronymic ?? "",
+      name: user?.name ?? "",
+      surname: user?.surname ?? "",
+      login: user?.login ?? "",
+      patronymic: user?.patronymic ?? "",
       roleId: "",
     },
   });
 
   const onSubmit = async (data: IUserFormData) => {
-    await updateUser({
-      id: user.id,
-      data: {
-        ...data,
-        roleId: user.roleId,
-      },
-    }); //TODO доделать выбор роли
+    if (user)
+      await updateUser({
+        id: user.id,
+        data: {
+          ...data,
+          roleId: user.roleId,
+        },
+      }); //TODO доделать выбор роли
 
     queryClient.invalidateQueries({
       queryKey: [RoutesEnum.USERS],
     });
 
-    setOpen(false);
+    setOpenDialog(false);
   };
   return (
     <div className="h-full">

@@ -43,6 +43,7 @@ export const Button: FC<IButtonProps> = ({
     <button
       className={cn(
         buttonVariants({ variant, size }),
+        "outline-none",
         disabled && "opacity-50",
         className,
       )}
