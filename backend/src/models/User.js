@@ -3,7 +3,7 @@ import { pool } from "../config/db.js";
 export class User {
   static async getUsers() {
     const data = await pool.query(
-      `SELECT id_user, name, surname, patronymic, login, id_role FROM users ORDER BY name ASC`,
+      `SELECT id_user, name, surname, patronymic, login, id_role FROM users ORDER BY name ASC, surname ASC, login ASC`,
     );
     return data.rows;
   }
