@@ -3,5 +3,5 @@ export interface IUserFormData {
   surname: string;
   patronymic?: string;
   login: string;
-  role?: string;
+  roleId: string;
 }
