@@ -9,6 +9,7 @@ import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.t
 import { useShallow } from "zustand/react/shallow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editUserScheme } from "@features/user/edit-user/ui/scheme.ts";
+import { Combobox } from "@shared/ui/components/combobox";
 
 export const EditUserForm = () => {
   const { mutateAsync: updateUser } = useUpdateUser();
@@ -107,11 +108,18 @@ export const EditUserForm = () => {
         <Controller
           control={control}
           render={({ field }) => (
-            <Input
+            <Combobox
               placeholder="Роль"
-              value={field.value ?? ""}
-              onChange={field.onChange}
-              error={errors?.roleId?.message}
+              options={[
+                {
+                  label: "Администратор",
+                  value: "1",
+                },
+                {
+                  label: "Пользователь",
+                  value: "2",
+                },
+              ]}
             />
           )}
           name={"roleId"}
