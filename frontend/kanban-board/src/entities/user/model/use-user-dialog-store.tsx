@@ -6,6 +6,8 @@ interface IUserDialogStore {
   setUser: (user: IUser | null) => void;
   openEditDialog: boolean;
   setOpenEditDialog: (open: boolean) => void;
+  openAddDialog: boolean;
+  setOpenAddDialog: (open: boolean) => void;
 }
 
 export const useUserDialogStore = create<IUserDialogStore>((set) => ({
@@ -13,4 +15,6 @@ export const useUserDialogStore = create<IUserDialogStore>((set) => ({
   setUser: (user: IUser | null) => set({ user }),
   openEditDialog: false,
   setOpenEditDialog: (open: boolean) => set({ openEditDialog: open }),
+  openAddDialog: false,
+  setOpenAddDialog: (open: boolean) => set({ openAddDialog: open }),
 }));

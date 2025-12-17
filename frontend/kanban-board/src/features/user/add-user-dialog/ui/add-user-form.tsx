@@ -1,54 +1,28 @@
 import { Input } from "@shared/ui/components/input";
 import { Button } from "@shared/ui/components/button";
 import { Controller, useForm } from "react-hook-form";
-import type { IEditUserFormData } from "@features/user/edit-user/model/types.ts";
-import { useUpdateUser } from "@features/user/edit-user/model/use-update-user.tsx";
-import { useQueryClient } from "@tanstack/react-query";
-import { RoutesEnum } from "@shared/routes";
-import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
-import { useShallow } from "zustand/react/shallow";
+import type { IAddUserFormData } from "@features/user/edit-user/model/types.ts";
+import { addUserScheme } from "@features/user/add-user-dialog/model/scheme.ts";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export const EditUserForm = () => {
-  const { mutateAsync: updateUser } = useUpdateUser();
-  const queryClient = useQueryClient();
-
-  const { setOpenDialog, user } = useUserDialogStore(
-    useShallow((state) => ({
-      open: state.openEditDialog,
-      setOpenDialog: state.setOpenEditDialog,
-      user: state.user,
-    })),
-  );
-
+export const AddUserForm = () => {
   const {
     control,
+    formState: { isValid, errors },
     handleSubmit,
-    formState: { isDirty },
-  } = useForm<IEditUserFormData>({
+  } = useForm<IAddUserFormData>({
+    resolver: zodResolver(addUserScheme),
     defaultValues: {
-      name: user?.name ?? "",
-      surname: user?.surname ?? "",
-      login: user?.login ?? "",
-      patronymic: user?.patronymic ?? "",
+      name: "",
+      login: "",
+      password: "",
       roleId: "",
+      surname: "",
     },
   });
 
-  const onSubmit = async (data: IEditUserFormData) => {
-    if (user)
-      await updateUser({
-        id: user.id,
-        data: {
-          ...data,
-          roleId: user.roleId,
-        },
-      }); //TODO доделать выбор роли
-
-    queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.USERS],
-    });
-
-    setOpenDialog(false);
+  const onSubmit = (data: IAddUserFormData) => {
+    console.log(data);
   };
   return (
     <div className="h-full">
@@ -57,9 +31,22 @@ export const EditUserForm = () => {
           control={control}
           render={({ field }) => (
             <Input
-              placeholder="Имя"
-              value={field.value ?? ""}
+              placeholder="Логин"
+              value={field.value}
               onChange={field.onChange}
+              error={errors?.login?.message}
+            />
+          )}
+          name={"login"}
+        />
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <Input
+              placeholder="Имя"
+              value={field.value}
+              onChange={field.onChange}
+              error={errors?.name?.message}
             />
           )}
           name={"name"}
@@ -69,8 +56,9 @@ export const EditUserForm = () => {
           render={({ field }) => (
             <Input
               placeholder="Фамилия"
-              value={field.value ?? ""}
+              value={field.value}
               onChange={field.onChange}
+              error={errors?.surname?.message}
             />
           )}
           name={"surname"}
@@ -80,8 +68,9 @@ export const EditUserForm = () => {
           render={({ field }) => (
             <Input
               placeholder="Отчество"
-              value={field.value ?? ""}
+              value={field.value}
               onChange={field.onChange}
+              error={errors?.patronymic?.message}
             />
           )}
           name={"patronymic"}
@@ -90,29 +79,30 @@ export const EditUserForm = () => {
           control={control}
           render={({ field }) => (
             <Input
-              placeholder="Логин"
-              value={field.value ?? ""}
+              placeholder="Пароль"
+              value={field.value}
               onChange={field.onChange}
+              error={errors?.password?.message}
             />
           )}
-          name={"login"}
+          name={"password"}
         />
         <Controller
           control={control}
           render={({ field }) => (
             <Input
               placeholder="Роль"
-              value={field.value ?? ""}
+              value={field.value}
               onChange={field.onChange}
+              error={errors?.roleId?.message}
             />
           )}
           name={"roleId"}
         />
       </div>
       <Button
-        className="w-full bg-blue-200 py-[10px] mt-auto"
         onClick={handleSubmit(onSubmit)}
-        disabled={!isDirty}
+        className="w-full bg-blue-200 py-[10px] mt-auto"
       >
         Сохранить изменения
       </Button>

@@ -8,7 +8,7 @@ import { EditUserForm } from "@features/user/edit-user/ui/edit-user-form.tsx";
 import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
 import { useShallow } from "zustand/react/shallow";
 
-export const EditUserDialog = ({}) => {
+export const EditUserDialog = () => {
   const { open, setOpenDialog } = useUserDialogStore(
     useShallow((state) => ({
       open: state.openEditDialog,
