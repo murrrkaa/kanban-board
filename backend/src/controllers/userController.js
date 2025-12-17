@@ -15,6 +15,7 @@ export const createUser = requestHandler(async (req, res) => {
 
   const data = await User.createUser({
     ...req.body,
+    id_role: req.body.roleId,
     password: hashedPassword,
   });
   return {
