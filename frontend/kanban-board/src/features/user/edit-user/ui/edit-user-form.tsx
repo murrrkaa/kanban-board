@@ -7,6 +7,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
 import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
 import { useShallow } from "zustand/react/shallow";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { editUserScheme } from "@features/user/edit-user/ui/scheme.ts";
 
 export const EditUserForm = () => {
   const { mutateAsync: updateUser } = useUpdateUser();
@@ -23,8 +25,9 @@ export const EditUserForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { isDirty },
+    formState: { isDirty, errors },
   } = useForm<IEditUserFormData>({
+    resolver: zodResolver(editUserScheme),
     defaultValues: {
       name: user?.name ?? "",
       surname: user?.surname ?? "",
@@ -60,6 +63,7 @@ export const EditUserForm = () => {
               placeholder="Имя"
               value={field.value ?? ""}
               onChange={field.onChange}
+              error={errors?.name?.message}
             />
           )}
           name={"name"}
@@ -71,6 +75,7 @@ export const EditUserForm = () => {
               placeholder="Фамилия"
               value={field.value ?? ""}
               onChange={field.onChange}
+              error={errors?.surname?.message}
             />
           )}
           name={"surname"}
@@ -82,6 +87,7 @@ export const EditUserForm = () => {
               placeholder="Отчество"
               value={field.value ?? ""}
               onChange={field.onChange}
+              error={errors?.patronymic?.message}
             />
           )}
           name={"patronymic"}
@@ -93,6 +99,7 @@ export const EditUserForm = () => {
               placeholder="Логин"
               value={field.value ?? ""}
               onChange={field.onChange}
+              error={errors?.login?.message}
             />
           )}
           name={"login"}
@@ -104,6 +111,7 @@ export const EditUserForm = () => {
               placeholder="Роль"
               value={field.value ?? ""}
               onChange={field.onChange}
+              error={errors?.roleId?.message}
             />
           )}
           name={"roleId"}
