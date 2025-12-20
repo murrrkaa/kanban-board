@@ -40,7 +40,7 @@ export const UserTable = () => {
   }, [data, isSuccess]);
 
   return (
-    <TableWrapper title="Users List Table">
+    <TableWrapper>
       <Table>
         <TableHead>
           <TableRow>
