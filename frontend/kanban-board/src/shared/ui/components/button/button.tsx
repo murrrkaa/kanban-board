@@ -11,6 +11,7 @@ export interface IButtonProps
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 const buttonVariants = tv({
@@ -36,7 +37,7 @@ export const Button: FC<IButtonProps> = ({
   rightIcon,
   children,
   size = "medium",
-  disabled,
+  disabled = false,
   ...props
 }) => {
   return (
@@ -47,6 +48,7 @@ export const Button: FC<IButtonProps> = ({
         disabled && "opacity-50",
         className,
       )}
+      disabled={disabled}
       {...props}
     >
       {leftIcon}
