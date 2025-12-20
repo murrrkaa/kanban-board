@@ -10,7 +10,7 @@ const loginScheme = z
   .max(150, loginMessage)
   .regex(/^[a-zA-Z0-9@/+\-_]+$/, loginMessage);
 
-const passwordScheme = z
+export const passwordScheme = z
   .string()
   .min(12, passwordMessage)
   .regex(

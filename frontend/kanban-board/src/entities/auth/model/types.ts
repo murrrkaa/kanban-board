@@ -2,11 +2,13 @@ import type { JwtPayload } from "jwt-decode";
 
 export interface IUserDto {
   id_role: string;
-  id_user: string;
+  id_user?: string;
   name: string;
   surname: string;
-  patronymic: string;
+  patronymic: string | null;
   login: string;
+  role_name?: string;
+  password?: string;
 }
 
 export interface IUser {
@@ -16,6 +18,7 @@ export interface IUser {
   patronymic?: string;
   login: string;
   roleId: string;
+  roleName?: string;
 }
 
 export interface IUserStore {

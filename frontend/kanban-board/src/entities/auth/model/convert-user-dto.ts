@@ -8,5 +8,6 @@ export const convertUserDto = (user: IUserDto): IUser => {
     surname: user?.surname,
     login: user?.login,
     patronymic: user?.patronymic,
+    roleName: user?.role_name,
   };
 };

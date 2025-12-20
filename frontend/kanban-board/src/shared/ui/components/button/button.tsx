@@ -36,11 +36,17 @@ export const Button: FC<IButtonProps> = ({
   rightIcon,
   children,
   size = "medium",
+  disabled,
   ...props
 }) => {
   return (
     <button
-      className={cn(buttonVariants({ variant, size }), className)}
+      className={cn(
+        buttonVariants({ variant, size }),
+        "outline-none",
+        disabled && "opacity-50",
+        className,
+      )}
       {...props}
     >
       {leftIcon}

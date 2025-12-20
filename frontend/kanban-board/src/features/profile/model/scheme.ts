@@ -6,28 +6,28 @@ import {
 } from "@features/profile/model/constants.ts";
 import { nameMessage } from "@features/profile/model/constants.ts";
 
-const loginScheme = z
+export const loginScheme = z
   .string()
   .trim()
   .min(1, loginMessage)
   .max(150, loginMessage)
   .regex(/^[a-zA-Z0-9@/+\-_]+$/, loginMessage);
 
-const nameScheme = z
+export const nameScheme = z
   .string()
   .trim()
   .min(1, nameMessage)
   .max(150, nameMessage)
   .regex(/^[а-яА-яЁё]+$/, nameMessage);
 
-const surnameScheme = z
+export const surnameScheme = z
   .string()
   .trim()
   .min(1, surnameMessage)
   .max(150, surnameMessage)
   .regex(/^[а-яА-яЁё]+$/, surnameMessage);
 
-const patronymicScheme = z
+export const patronymicScheme = z
   .string()
   .max(150, patronymicMessage)
   .regex(/^[а-яА-ЯЁё]+$/, patronymicMessage)
