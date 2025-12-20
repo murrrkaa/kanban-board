@@ -1,6 +1,6 @@
-import type { IAddUserFormData } from "@features/user/edit-user/model/types.ts";
 import { baseApi } from "@shared/instance.ts";
 import { RoutesEnum } from "@shared/routes";
+import type { IUserDto } from "@entities/auth/model/types.ts";
 
-export const postUser = async (data: IAddUserFormData) =>
+export const postUser = async (data: IUserDto) =>
   await baseApi.post(`${RoutesEnum.USERS}`, data);

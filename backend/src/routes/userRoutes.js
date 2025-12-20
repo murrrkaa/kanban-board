@@ -11,8 +11,8 @@ import { permitMiddleware } from "../middleware/permitMiddleware/permitMiddlewar
 const router = express.Router();
 
 router.get("/", getUsers);
-router.post("/", permitMiddleware("Administrator"), createUser);
-router.delete("/:id", permitMiddleware("Administrator"), deleteUser);
+router.post("/", permitMiddleware("Администратор"), createUser);
+router.delete("/:id", permitMiddleware("Администратор"), deleteUser);
 
 router.get("/:id", getUser);
 router.put("/:id", updateUser);

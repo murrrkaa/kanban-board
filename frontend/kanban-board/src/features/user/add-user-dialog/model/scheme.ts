@@ -12,6 +12,6 @@ export const addUserScheme = z.object({
   name: nameScheme,
   surname: surnameScheme,
   patronymic: patronymicScheme,
-  roleId: z.string(),
+  role: z.string(),
   password: passwordScheme,
 });

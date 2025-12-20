@@ -8,8 +8,12 @@ import { useCreateUser } from "@features/user/add-user-dialog/model/use-create-u
 import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
+import { Combobox } from "@shared/ui/components/combobox";
+import { useRolesStore } from "@entities/role/model/use-roles-store.tsx";
 
 export const AddUserForm = () => {
+  const rolesList = useRolesStore().roles;
+
   const queryClient = useQueryClient();
   const { mutateAsync: createUser } = useCreateUser();
   const {
@@ -22,7 +26,7 @@ export const AddUserForm = () => {
       name: "",
       login: "",
       password: "",
-      roleId: "",
+      role: "",
       surname: "",
     },
   });
@@ -100,14 +104,14 @@ export const AddUserForm = () => {
         <Controller
           control={control}
           render={({ field }) => (
-            <Input
+            <Combobox
               placeholder="Роль"
-              value={field.value}
+              options={rolesList}
+              selected={field.value}
               onChange={field.onChange}
-              error={errors?.roleId?.message}
             />
           )}
-          name={"roleId"}
+          name={"role"}
         />
       </div>
       <Button
