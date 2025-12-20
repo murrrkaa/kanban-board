@@ -3,6 +3,7 @@ import { useAuthStore } from "@entities/auth/model/use-auth-store.ts";
 import { useNavigate } from "react-router-dom";
 import { RoutesEnum } from "@shared/routes";
 import { getAuthUser } from "@entities/auth/model/get-auth-user.ts";
+import { useRolesStore } from "@entities/role/model/use-roles-store.tsx";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export const useAuth = () => {
   const checkAuth = async () => {
     const user = await getAuthUser();
     useAuthStore.getState().setUser(user);
+    useRolesStore.getState().getRoles();
     if (!user) logout();
   };
 

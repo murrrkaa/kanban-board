@@ -19,10 +19,10 @@ export const columns: ColumnDef<IUser>[] = [
     accessorKey: "login",
     header: "Логин",
   },
-  // {
-  //   accessorKey: "roleId", // TODO: заменить на название роли
-  //   header: "Роль",
-  // },
+  {
+    accessorKey: "roleName",
+    header: "Роль",
+  },
   {
     header: "Настройки",
     cell: ({ row }) => {

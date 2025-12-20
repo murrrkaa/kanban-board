@@ -17,24 +17,32 @@ import {
 } from "@shared/ui/components/popover";
 import { cn } from "@shared/lib/cn.ts";
 
-interface IOption {
-  value: string;
-  label: string;
+export interface IOption {
+  id: string;
+  name: string;
 }
 
 interface IComboboxProps<T extends IOption> {
-  selected: T;
+  selected: string;
   placeholder: string;
   options: T[];
+  onChange: (value: string) => void;
 }
 
 export const Combobox = <T extends IOption>({
   selected,
   placeholder,
   options,
+  onChange,
 }: IComboboxProps<T>) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(selected?.value);
+  const [value, setValue] = React.useState(selected);
+
+  const handleChangeValue = (currentValue: string) => {
+    setValue(currentValue === value ? "" : currentValue);
+    setOpen(false);
+    onChange(currentValue);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -51,7 +59,7 @@ export const Combobox = <T extends IOption>({
           )}
         >
           {value
-            ? options?.find((option) => option?.value === value)?.label
+            ? options?.find((option) => option?.id === value)?.name
             : placeholder}
         </Button>
       </PopoverTrigger>
@@ -62,21 +70,18 @@ export const Combobox = <T extends IOption>({
             <CommandGroup className="p-0">
               {options?.map((option) => (
                 <CommandItem
-                  key={option.value}
-                  value={option.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  key={option.id}
+                  value={option.id}
+                  onSelect={handleChangeValue}
                   className="h-[40px] hover:bg-blue-100"
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4 text-blue-100",
-                      value === option?.value ? "opacity-100" : "opacity-0",
+                      value === option?.id ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {option.label}
+                  {option.name}
                 </CommandItem>
               ))}
             </CommandGroup>

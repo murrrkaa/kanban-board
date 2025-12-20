@@ -3,7 +3,7 @@ export interface IEditUserFormData {
   surname: string;
   patronymic?: string;
   login: string;
-  roleId: string;
+  role: string;
 }
 
 export interface IAddUserFormData {
@@ -11,6 +11,6 @@ export interface IAddUserFormData {
   surname: string;
   patronymic?: string;
   login: string;
-  roleId: string;
+  role: string;
   password: string;
 }

@@ -23,7 +23,7 @@ import type { IUser } from "@entities/auth/model/types.ts";
 export const UserTable = () => {
   const { data, isSuccess } = useGetUsers();
   const users = useUsersStore((state) => state.users);
-
+  console.log(users);
   const table = useReactTable({
     data: users,
     columns: columns,

@@ -3,7 +3,9 @@ import { pool } from "../config/db.js";
 export class User {
   static async getUsers() {
     const data = await pool.query(
-      `SELECT id_user, name, surname, patronymic, login, id_role FROM users ORDER BY name ASC, surname ASC, login ASC`,
+      `SELECT u.id_user, u.name, u.surname, u.patronymic, u.login, u.id_role, r.name as role_name FROM users u 
+       LEFT JOIN roles r ON r.id_role = u.id_role
+       ORDER BY u.name ASC, u.surname ASC, u.login ASC`,
     );
     return data.rows;
   }
@@ -44,7 +46,9 @@ export class User {
 
   static async getUser(id_user) {
     const data = await pool.query(
-      `SELECT id_user, name, surname, patronymic, login, id_role FROM users WHERE id_user=$1`,
+      `SELECT u.id_user, u.name, u.surname, u.patronymic, u.login, u.id_role, r.name as role_name FROM users u 
+       LEFT JOIN roles r ON r.id_role = u.id_role
+       WHERE id_user=$1`,
       [id_user],
     );
 

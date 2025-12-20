@@ -10,8 +10,12 @@ import { useShallow } from "zustand/react/shallow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editUserScheme } from "@features/user/edit-user/ui/scheme.ts";
 import { Combobox } from "@shared/ui/components/combobox";
+import { useRolesStore } from "@entities/role/model/use-roles-store.tsx";
+import type { IOption } from "@shared/ui/components/combobox/combobox.tsx";
 
 export const EditUserForm = () => {
+  const rolesList = useRolesStore().roles;
+
   const { mutateAsync: updateUser } = useUpdateUser();
   const queryClient = useQueryClient();
 
@@ -26,6 +30,7 @@ export const EditUserForm = () => {
   const {
     control,
     handleSubmit,
+    getValues,
     formState: { isDirty, errors },
   } = useForm<IEditUserFormData>({
     resolver: zodResolver(editUserScheme),
@@ -34,19 +39,18 @@ export const EditUserForm = () => {
       surname: user?.surname ?? "",
       login: user?.login ?? "",
       patronymic: user?.patronymic ?? "",
-      roleId: "",
+      role: user?.roleId ?? "",
     },
   });
-
+  console.log(getValues());
   const onSubmit = async (data: IEditUserFormData) => {
     if (user)
       await updateUser({
         id: user.id,
         data: {
           ...data,
-          roleId: user.roleId,
         },
-      }); //TODO доделать выбор роли
+      });
 
     queryClient.invalidateQueries({
       queryKey: [RoutesEnum.USERS],
@@ -110,19 +114,12 @@ export const EditUserForm = () => {
           render={({ field }) => (
             <Combobox
               placeholder="Роль"
-              options={[
-                {
-                  label: "Администратор",
-                  value: "1",
-                },
-                {
-                  label: "Пользователь",
-                  value: "2",
-                },
-              ]}
+              options={rolesList as IOption[]}
+              selected={field.value}
+              onChange={field.onChange}
             />
           )}
-          name={"roleId"}
+          name={"role"}
         />
       </div>
       <Button

@@ -10,7 +10,7 @@ export const useUpdateUser = () => {
     mutationFn: ({ id, data }: { id: string; data: IEditUserFormData }) => {
       const transformedData = transformToBack({
         id,
-        ...data,
+        ...{ ...data, roleId: data.role },
       });
 
       return putUser(transformedData);

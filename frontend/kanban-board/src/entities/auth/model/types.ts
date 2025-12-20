@@ -7,6 +7,7 @@ export interface IUserDto {
   surname: string;
   patronymic: string;
   login: string;
+  role_name?: string;
 }
 
 export interface IUser {
@@ -16,6 +17,7 @@ export interface IUser {
   patronymic?: string;
   login: string;
   roleId: string;
+  roleName?: string;
 }
 
 export interface IUserStore {
