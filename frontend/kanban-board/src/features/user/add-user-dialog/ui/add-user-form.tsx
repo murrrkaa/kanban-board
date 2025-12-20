@@ -40,7 +40,7 @@ export const AddUserForm = () => {
   };
   return (
     <div className="h-full">
-      <div className="h-[calc(100%-100px)] flex flex-col gap-4 mt-[30px]">
+      <div className="h-[calc(100%-120px)] scrollbar overflow-y-auto mb-[20px] pr-[8px] flex flex-col gap-4 mt-[30px]">
         <Controller
           control={control}
           render={({ field }) => (
