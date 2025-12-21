@@ -12,9 +12,9 @@ export const useCreateProject = () => {
     mutationKey: [RoutesEnum.PROJECTS],
     mutationFn: (data: IAddProjectForm) => {
       const transformedData: IAddProjectDto = {
-        name: data.name,
+        name: data.name || "Новый проект",
         description: data.description,
-        id_created_by: data.createdBy ?? useAuthStore.getState().user!.id,
+        id_created_by: data.createdBy || useAuthStore.getState().user!.id,
       };
       return postProject(transformedData);
     },
