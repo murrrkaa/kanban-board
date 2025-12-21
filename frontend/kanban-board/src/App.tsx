@@ -7,6 +7,7 @@ import { Redirect } from "@widgets/redirect/ui";
 import { AuthProvider } from "@entities/auth/ui";
 import { ProfilePage } from "@/pages/profile/ui/profile-page.tsx";
 import { UsersPage } from "@/pages/users/ui/users-page.tsx";
+import { ProjectsPage } from "@/pages/projects/ui/projects-page.tsx";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -19,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Redirect />} />
             <Route path={RoutesEnum.DASHBOARDS} element={<></>} />
-            <Route path={RoutesEnum.PROJECTS} element={<></>} />
+            <Route path={RoutesEnum.PROJECTS} element={<ProjectsPage />} />
             <Route path={RoutesEnum.TASKS} element={<></>} />
             <Route path={RoutesEnum.USERS} element={<UsersPage />} />
             <Route path={RoutesEnum.PROFILE} element={<ProfilePage />} />
