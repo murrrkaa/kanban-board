@@ -4,6 +4,7 @@ export interface IProjectDto {
   description: string;
   createdAt: string;
   performer: {
+    id: string;
     name: string;
     surname: string;
     patronymic?: string;

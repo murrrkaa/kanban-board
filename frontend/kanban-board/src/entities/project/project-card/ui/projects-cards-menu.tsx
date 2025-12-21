@@ -6,8 +6,19 @@ import {
 } from "@shared/ui/components/dropdown";
 import { Button } from "@shared/ui/components/button";
 import { MoreIcon } from "@shared/ui/icons/more-icon.tsx";
+import { useProjectsStore } from "@entities/project/project-card/model/use-projects-store.tsx";
+import type { IProjectDto } from "@features/project/project-card/model/types.ts";
+import type { FC } from "react";
 
-export const ProjectsCardsMenu = () => {
+interface IProp {
+  project: IProjectDto | null;
+}
+
+export const ProjectsCardsMenu: FC<IProp> = ({ project }) => {
+  const handleEditProject = () => {
+    useProjectsStore.getState().setProject(project);
+    useProjectsStore.getState().setEditProjectModal(true);
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -16,7 +27,9 @@ export const ProjectsCardsMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
-        <DropdownMenuItem>Редактировать</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleEditProject}>
+          Редактировать
+        </DropdownMenuItem>
         <DropdownMenuItem>Удалить</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -4,16 +4,10 @@ import { useGetProjects } from "@features/project/project-card/model/use-get-pro
 
 export const ProjectCards = () => {
   const { data } = useGetProjects();
-
   return (
     <TableWrapper className="p-[30px] flex flex-row flex-wrap gap-[8px]">
       {data?.map((project) => (
-        <ProjectCard
-          name={project.name}
-          description={project.description}
-          createdAt={project.createdAt}
-          performer={project.performer}
-        />
+        <ProjectCard project={project} key={project.id} />
       ))}
     </TableWrapper>
   );

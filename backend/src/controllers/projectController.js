@@ -10,6 +10,7 @@ export const getProjects = requestHandler(async (req, res) => {
     description: item.description,
     createdAt: item.created_at,
     performer: {
+      id: item.performer_id,
       name: item.performer_name,
       surname: item.performer_surname,
       patronymic: item.performer_patronymic,
@@ -41,6 +42,20 @@ export const deleteProject = requestHandler(async (req, res) => {
 export const getProject = requestHandler(async (req, res) => {
   const { id: id_project } = req.params;
   const data = await Project.getProject(id_project);
+  return {
+    status: 200,
+    data,
+  };
+});
+
+export const updateProject = requestHandler(async (req, res) => {
+  const { id: id_project } = req.params;
+  const form = {
+    id_project,
+    name: req.body.data.name,
+    description: req.body.data.description,
+  };
+  const data = await Project.updateProject(form);
   return {
     status: 200,
     data,
