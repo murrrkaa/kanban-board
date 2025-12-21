@@ -2,23 +2,28 @@ import type { FC } from "react";
 import { Title } from "@shared/ui/components/title";
 
 interface IProps {
-  title: string;
+  name: string;
   description?: string;
-  createdAt?: Date;
-  performer?: string;
+  createdAt?: string;
+  performer?: {
+    name: string;
+    surname: string;
+    patronymic?: string;
+  };
 }
 
 export const ProjectCard: FC<IProps> = ({
-  title,
+  name,
   performer,
   createdAt,
   description,
 }) => {
+  const performerName = `${performer?.name} ${performer?.surname} ${performer?.patronymic ?? ""}`;
   return (
     <div className="w-[366px] h-[260px] bg-white rounded-[16px] shadow-md">
       <div className="p-[15px] flex flex-col gap-[16px]">
         <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
-          {title}
+          {name}
         </Title>
         {performer && (
           <div>
@@ -26,7 +31,7 @@ export const ProjectCard: FC<IProps> = ({
               Исполнитель
             </div>
             <span className="text-[16px]/[20px] text-gray-700 line-clamp-2 truncate ">
-              {performer}
+              {performerName}
             </span>
           </div>
         )}
@@ -36,7 +41,7 @@ export const ProjectCard: FC<IProps> = ({
               Дата создания
             </div>
             <span className="text-[16px]/[20px] text-gray-700">
-              {createdAt?.toLocaleDateString()}
+              {new Date(createdAt).toLocaleDateString()}
             </span>
           </div>
         )}

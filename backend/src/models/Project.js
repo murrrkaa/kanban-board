@@ -2,7 +2,11 @@ import { pool } from "../config/db.js";
 
 export class Project {
   static async getProjects() {
-    const data = await pool.query(`SELECT * FROM projects`);
+    const data = await pool.query(
+      `SELECT p.id_project, p.name, p.description, p.created_at, u.name as performer_name, u.surname as performer_surname, u.patronymic as performer_patronymic FROM projects p 
+       LEFT JOIN users u ON p.id_created_by = u.id_user`,
+    );
+
     return data.rows;
   }
 
