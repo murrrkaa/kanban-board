@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Title } from "@shared/ui/components/title";
+import { ProjectsCardsMenu } from "@entities/project/project-card/ui/projects-cards-menu.tsx";
 
 interface IProps {
   name: string;
@@ -22,9 +23,12 @@ export const ProjectCard: FC<IProps> = ({
   return (
     <div className="w-[366px] h-[260px] bg-white rounded-[16px] shadow-md">
       <div className="p-[15px] flex flex-col gap-[16px]">
-        <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
-          {name}
-        </Title>
+        <div className="flex flex-row items-start justify-between gap-[8px]">
+          <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
+            {name}
+          </Title>
+          <ProjectsCardsMenu />
+        </div>
         {performer && (
           <div>
             <div className="text-[14px]/[16px] text-blue-500 font-medium">
