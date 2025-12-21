@@ -37,7 +37,12 @@ export const EditProjectForm = () => {
   });
 
   const onSubmit = async (data: IProjectDto) => {
-    await updateProject(data);
+    if (!data.name) {
+      await updateProject({
+        ...data,
+        name: project!.name,
+      });
+    }
     query.invalidateQueries({
       queryKey: [RoutesEnum.PROJECTS],
     });
