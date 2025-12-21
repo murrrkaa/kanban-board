@@ -30,7 +30,6 @@ export const EditUserForm = () => {
   const {
     control,
     handleSubmit,
-    getValues,
     formState: { isDirty, errors },
   } = useForm<IEditUserFormData>({
     resolver: zodResolver(editUserScheme),
@@ -42,7 +41,7 @@ export const EditUserForm = () => {
       role: user?.roleId ?? "",
     },
   });
-  console.log(getValues());
+
   const onSubmit = async (data: IEditUserFormData) => {
     if (user)
       await updateUser({

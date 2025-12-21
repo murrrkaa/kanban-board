@@ -2,7 +2,12 @@ import { pool } from "../config/db.js";
 
 export class Project {
   static async getProjects() {
-    const data = await pool.query(`SELECT * FROM projects`);
+    const data = await pool.query(
+      `SELECT p.id_project, p.name, p.description, p.created_at, u.id_user as performer_id,u.name as performer_name, u.surname as performer_surname, u.patronymic as performer_patronymic FROM projects p 
+       LEFT JOIN users u ON p.id_created_by = u.id_user
+       ORDER BY p.created_at DESC`,
+    );
+
     return data.rows;
   }
 
@@ -37,6 +42,17 @@ export class Project {
     );
 
     if (!data.rows.length) throw { status: 404, message: "Project Not Found" };
+
+    return data.rows[0];
+  }
+
+  static async updateProject(form) {
+    const data = await pool.query(
+      `UPDATE projects SET name=$2, description=$3 WHERE id_project=$1 RETURNING *`,
+      [form.id_project, form.name, form.description],
+    );
+
+    if (!data.rows[0]) throw { status: 400, message: "Invalid data" };
 
     return data.rows[0];
   }
