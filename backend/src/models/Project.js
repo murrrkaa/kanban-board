@@ -5,7 +5,7 @@ export class Project {
     const data = await pool.query(
       `SELECT p.id_project, p.name, p.description, p.created_at, u.id_user as performer_id,u.name as performer_name, u.surname as performer_surname, u.patronymic as performer_patronymic FROM projects p 
        LEFT JOIN users u ON p.id_created_by = u.id_user
-       ORDER BY p.created_at`,
+       ORDER BY p.created_at DESC`,
     );
 
     return data.rows;
