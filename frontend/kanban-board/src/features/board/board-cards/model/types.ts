@@ -4,6 +4,6 @@ export interface IBoard {
   projectId: string;
   projectName: string;
   description: string;
-  createdAt: Date;
+  createdAt: string;
   projectDescription: string;
 }

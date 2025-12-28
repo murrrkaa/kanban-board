@@ -2,19 +2,19 @@ import { Controller, useForm } from "react-hook-form";
 import { Input } from "@shared/ui/components/input";
 import { Button } from "@shared/ui/components/button";
 import { useShallow } from "zustand/react/shallow";
-import { useProjectsStore } from "@entities/project/project-card/model/use-projects-store.tsx";
-import type { IProjectDto } from "@features/project/project-card/model/types.ts";
-import { useUpdateProject } from "@features/project/edit-project/model/use-update-project.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
+import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
+import type { IBoard } from "@features/board/board-cards/model/types.ts";
+import { useUpdateBoard } from "@features/board/edit-board/model/use-update-board.tsx";
 
-export const EditProjectForm = () => {
-  const { mutateAsync: updateProject } = useUpdateProject();
+export const EditBoardForm = () => {
+  const { mutateAsync: updateBoard } = useUpdateBoard();
   const query = useQueryClient();
-  const { setOpenDialog, project } = useProjectsStore(
+  const { setOpenDialog, board } = useBoardStore(
     useShallow((state) => ({
-      setOpenDialog: state.setEditProjectModal,
-      project: state.project,
+      setOpenDialog: state.setEditBoardModal,
+      board: state.board,
     })),
   );
 
@@ -22,28 +22,25 @@ export const EditProjectForm = () => {
     control,
     handleSubmit,
     formState: { isDirty },
-  } = useForm<IProjectDto>({
+  } = useForm<IBoard>({
     defaultValues: {
-      id: project?.id,
-      name: project?.name ?? "",
-      description: project?.description ?? "",
-      createdAt: new Date(project?.createdAt ?? "").toLocaleDateString(),
-      performer: {
-        name: project?.performer?.name ?? "",
-        surname: project?.performer?.surname ?? "",
-        patronymic: project?.performer?.patronymic ?? "",
-      },
+      id: board?.id,
+      name: board?.name ?? "",
+      description: board?.description ?? "",
+      createdAt: new Date(board?.createdAt ?? "").toLocaleDateString(),
+      projectName: board?.projectName ?? "",
+      projectDescription: board?.projectDescription ?? "",
     },
   });
 
-  const onSubmit = async (data: IProjectDto) => {
-    await updateProject({
+  const onSubmit = async (data: IBoard) => {
+    await updateBoard({
       ...data,
-      name: data?.name || project!.name,
+      name: data?.name || board!.name,
     });
 
     query.invalidateQueries({
-      queryKey: [RoutesEnum.PROJECTS],
+      queryKey: [RoutesEnum.DASHBOARDS],
     });
     setOpenDialog(false);
   };
@@ -54,7 +51,7 @@ export const EditProjectForm = () => {
           control={control}
           render={({ field }) => (
             <Input
-              placeholder="Наименование проекта"
+              placeholder="Наименование доски"
               value={field.value ?? ""}
               onChange={field.onChange}
             />
@@ -65,7 +62,7 @@ export const EditProjectForm = () => {
           control={control}
           render={({ field }) => (
             <Input
-              placeholder="Описание проекта"
+              placeholder="Описание доски"
               value={field.value ?? ""}
               onChange={field.onChange}
             />
@@ -77,7 +74,7 @@ export const EditProjectForm = () => {
           render={({ field }) => (
             <Input
               disabled
-              placeholder="Дата создания"
+              placeholder="Дата создания "
               value={field.value ?? ""}
               onChange={field.onChange}
             />
@@ -89,12 +86,24 @@ export const EditProjectForm = () => {
           render={({ field }) => (
             <Input
               disabled
-              placeholder="Создатель"
-              value={`${field?.value?.name} ${field?.value?.surname} ${field?.value?.patronymic ?? ""}`}
+              placeholder="Имя проекта"
+              value={field.value ?? ""}
               onChange={field.onChange}
             />
           )}
-          name={"performer"}
+          name={"projectName"}
+        />
+        <Controller
+          control={control}
+          render={({ field }) => (
+            <Input
+              disabled
+              placeholder="Описание проекта"
+              value={field.value ?? ""}
+              onChange={field.onChange}
+            />
+          )}
+          name={"projectDescription"}
         />
       </div>
       <Button

@@ -46,4 +46,15 @@ export class Dashboard {
 
     return data.rows[0];
   }
+
+  static async updateDashboard(form) {
+    const data = await pool.query(
+      `UPDATE dashboards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
+      [form.id_dashboard, form.name, form.description],
+    );
+
+    if (!data.rows[0]) throw { status: 400, message: "Invalid data" };
+
+    return data.rows[0];
+  }
 }

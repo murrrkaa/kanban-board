@@ -1,5 +1,6 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Dashboard } from "../models/Dashboard.js";
+import { Project } from "../models/Project.js";
 
 export const getDashboards = requestHandler(async (req, res) => {
   const result = await Dashboard.getDashboards();
@@ -40,6 +41,20 @@ export const deleteDashboard = requestHandler(async (req, res) => {
 export const getDashboard = requestHandler(async (req, res) => {
   const { id: id_dashboard } = req.params;
   const data = await Dashboard.getDashboard(id_dashboard);
+  return {
+    status: 200,
+    data,
+  };
+});
+
+export const updateDashboard = requestHandler(async (req, res) => {
+  const { id: id_dashboard } = req.params;
+  const form = {
+    id_dashboard,
+    name: req.body.data.name,
+    description: req.body.data.description,
+  };
+  const data = await Dashboard.updateDashboard(form);
   return {
     status: 200,
     data,
