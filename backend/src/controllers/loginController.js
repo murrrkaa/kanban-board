@@ -19,7 +19,7 @@ export const loginUser = requestHandler(async (req, res) => {
     role: roleUser[0].name,
   };
 
-  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1h" });
+  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "24h" });
 
   return {
     status: 200,

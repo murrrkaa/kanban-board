@@ -2,7 +2,11 @@ import { pool } from "../config/db.js";
 
 export class Dashboard {
   static async getDashboards() {
-    const data = await pool.query(`SELECT * FROM dashboards`);
+    const data = await pool.query(
+      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM dashboards d
+       LEFT JOIN projects p ON p.id_project = d.id_project
+       ORDER BY d.created_at DESC`,
+    );
     return data.rows;
   }
 
@@ -39,6 +43,17 @@ export class Dashboard {
 
     if (!data.rows.length)
       throw { status: 404, message: "Dashboard Not Found" };
+
+    return data.rows[0];
+  }
+
+  static async updateDashboard(form) {
+    const data = await pool.query(
+      `UPDATE dashboards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
+      [form.id_dashboard, form.name, form.description],
+    );
+
+    if (!data.rows[0]) throw { status: 400, message: "Invalid data" };
 
     return data.rows[0];
   }
