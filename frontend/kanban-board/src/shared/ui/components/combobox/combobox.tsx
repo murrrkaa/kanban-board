@@ -63,9 +63,12 @@ export const Combobox = <T extends IOption>({
             : placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 border-gray-50">
+      <PopoverContent className="p-0 border-gray-50 overflow-y-auto scrollbar">
         <Command>
-          <CommandList>
+          <CommandList
+            className="overflow-y-auto scrollbar"
+            onWheel={(e) => e.stopPropagation()}
+          >
             <CommandEmpty>Список пуст</CommandEmpty>
             <CommandGroup className="p-0">
               {options?.map((option) => (
