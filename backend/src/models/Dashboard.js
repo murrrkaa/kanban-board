@@ -2,7 +2,10 @@ import { pool } from "../config/db.js";
 
 export class Dashboard {
   static async getDashboards() {
-    const data = await pool.query(`SELECT * FROM dashboards`);
+    const data = await pool.query(
+      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM dashboards d
+       LEFT JOIN projects p ON p.id_project = d.id_project`,
+    );
     return data.rows;
   }
 
