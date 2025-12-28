@@ -7,8 +7,8 @@ export const BoardCards = () => {
 
   return (
     <TableWrapper className="p-[30px] flex flex-row flex-wrap gap-[8px]">
-      {data?.map((board) => (
-        <BoardCard board={board} />
+      {data?.map((board, index) => (
+        <BoardCard board={board} key={index} />
       ))}
     </TableWrapper>
   );

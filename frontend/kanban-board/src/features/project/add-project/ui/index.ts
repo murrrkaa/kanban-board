@@ -1,1 +1,1 @@
-export { AddProjectDialog } from "./add-project.dialog.tsx";
+export { AddProjectDialog } from "./add-project-dialog.tsx";
