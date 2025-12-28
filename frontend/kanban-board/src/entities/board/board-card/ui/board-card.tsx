@@ -1,6 +1,7 @@
 import { Title } from "@shared/ui/components/title";
 import type { IBoard } from "@features/board/board-cards/model/types.ts";
 import type { FC } from "react";
+import { BoardCardsMenu } from "@entities/board/board-card/ui/board-cards-menu.tsx";
 
 interface IProps {
   board: IBoard;
@@ -14,6 +15,7 @@ export const BoardCard: FC<IProps> = ({ board }) => {
           <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
             {board?.name}
           </Title>
+          <BoardCardsMenu board={board} />
         </div>
         {board?.projectName && (
           <div>
