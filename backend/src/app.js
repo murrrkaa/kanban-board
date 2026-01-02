@@ -25,7 +25,7 @@ app.use("/api/users", authMiddleware, userRouter);
 app.use("/api/roles", authMiddleware, roleRouter);
 app.use("/api/projects", authMiddleware, projectRouter);
 app.use("/api/boards", authMiddleware, dashboardRoutes);
-app.use("/api/task", authMiddleware, taskRouter);
+app.use("/api/tasks", authMiddleware, taskRouter);
 app.use("/api/tasks/:id/comments", authMiddleware, commentRouter);
 app.use("/api/login", loginRouter);
 

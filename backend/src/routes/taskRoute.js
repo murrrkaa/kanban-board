@@ -4,11 +4,13 @@ import {
   deleteTask,
   getTask,
   getTasks,
+  getTasksByColumn,
 } from "../controllers/tasksController.js";
 
 const router = express.Router();
 
 router.get("/", getTasks);
+router.get("/byColumnBoard", getTasksByColumn);
 router.get("/:id", getTask);
 router.post("/", createTask);
 router.delete("/:id", deleteTask);

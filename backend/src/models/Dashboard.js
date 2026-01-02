@@ -3,8 +3,18 @@ import { pool } from "../config/db.js";
 export class Dashboard {
   static async getDashboards() {
     const data = await pool.query(
-      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM boards d
+      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project , JSON_AGG(
+    JSON_BUILD_OBJECT(
+      'id', c.id_board_column,
+      'name', c.name,
+      'status', c.status,
+      'order', c.order
+    )
+    ORDER BY c.order
+  ) AS columns FROM boards d
        LEFT JOIN projects p ON p.id_project = d.id_project
+       LEFT JOIN board_column c ON d.id_dashboard = c.id_dashboard
+       GROUP BY d.id_dashboard, d.name, d.description, d.created_at, d.id_project, p.name, p.description
        ORDER BY d.created_at DESC`,
     );
     return data.rows;

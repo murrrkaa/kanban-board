@@ -39,4 +39,14 @@ export class Task {
 
     return data.rows[0];
   }
+
+  static async getTasksByColumn(id_board_column) {
+    const data = await pool.query(
+      `SELECT t.id_task as id, t.name, t.description, t.created_at as "createdAt", t.priority, t.id_performer as "performerId", u.name as "performerName", u.surname as "performerSurname", u.patronymic as "performerPatronymic" FROM tasks t
+        LEFT JOIN users u ON u.id_user = t.id_performer
+        WHERE id_board_column=$1`,
+      [id_board_column],
+    );
+    return data.rows || [];
+  }
 }

@@ -34,3 +34,12 @@ export const createTask = requestHandler(async (req, res) => {
     data,
   };
 });
+
+export const getTasksByColumn = requestHandler(async (req, res) => {
+  const id = req.query.boardColumnId;
+  const data = await Task.getTasksByColumn(id);
+  return {
+    status: 200,
+    data,
+  };
+});

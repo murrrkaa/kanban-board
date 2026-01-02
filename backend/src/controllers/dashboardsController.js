@@ -1,6 +1,5 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Dashboard } from "../models/Dashboard.js";
-import { Project } from "../models/Project.js";
 
 export const getDashboards = requestHandler(async (req, res) => {
   const result = await Dashboard.getDashboards();
@@ -13,6 +12,7 @@ export const getDashboards = requestHandler(async (req, res) => {
     projectId: res.id_project,
     projectDescription: res.description_project,
     createdAt: res.created_at,
+    columns: res.columns,
   }));
 
   return {

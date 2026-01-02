@@ -7,9 +7,9 @@ export const BoardPage = () => {
   return (
     <PageWrapper title={board?.name ?? "Board"}>
       <div className="w-full h-[calc(100vh-140px)] grid grid-cols-[1fr_1fr_1fr] gap-4">
-        <BoardColumn columnId="" status={"Новые"} />
-        <BoardColumn columnId="" status={"В работе"} />
-        <BoardColumn columnId="" status={"Выполнено"} />
+        {board?.columns?.map((column) => (
+          <BoardColumn column={column} />
+        ))}
       </div>
     </PageWrapper>
   );
