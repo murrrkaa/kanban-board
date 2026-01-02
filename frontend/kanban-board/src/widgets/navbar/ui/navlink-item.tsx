@@ -10,7 +10,7 @@ interface ILinkProps extends IRoute {
 
 export const NavlinkItem: FC<ILinkProps> = ({ route, name, icon, onClick }) => {
   const LinkIcon = icon;
-  const isActiveLink = useLocation().pathname === route;
+  const isActiveLink = useLocation().pathname.includes(route);
   return (
     <NavLink
       to={route}
