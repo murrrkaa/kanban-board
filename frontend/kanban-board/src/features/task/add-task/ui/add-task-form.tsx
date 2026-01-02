@@ -95,6 +95,7 @@ export const AddTaskForm = () => {
         />
         <Controller
           control={control}
+          rules={{ required: true }}
           render={({ field }) => (
             <Combobox
               placeholder="Приоритет"

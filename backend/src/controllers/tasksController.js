@@ -1,8 +1,13 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Task } from "../models/Task.js";
+import { User } from "../models/User.js";
 
 export const getTasks = requestHandler(async (req, res) => {
-  const data = await Task.getTasks();
+  const { boardColumnId: id_board_column, name } = req.query;
+  const data = await Task.getTasks({
+    id_board_column,
+    name,
+  });
   return {
     status: 200,
     data,
@@ -44,9 +49,16 @@ export const createTask = requestHandler(async (req, res) => {
   };
 });
 
-export const getTasksByColumn = requestHandler(async (req, res) => {
-  const id = req.query.boardColumnId;
-  const data = await Task.getTasksByColumn(id);
+export const updateTask = requestHandler(async (req, res) => {
+  const form = {
+    name: req.body.name,
+    priority: req.body.priority,
+    id_board_column: req.body.boardColumnId,
+    id_performer: req.body.performerId,
+    description: req.body.description,
+    id: req.body.id,
+  };
+  const data = await Task.updateTask(form);
   return {
     status: 200,
     data,

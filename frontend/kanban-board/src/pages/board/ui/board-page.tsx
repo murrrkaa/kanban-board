@@ -2,6 +2,7 @@ import { PageWrapper } from "@shared/ui/components/page-wrapper";
 import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
 import { BoardColumn } from "@entities/board/board-column/ui";
 import { AddTaskDialog } from "@features/task/add-task/ui";
+import { EditTaskModal } from "@features/task/edit-task/ui/edit-task-modal.tsx";
 
 export const BoardPage = () => {
   const board = useBoardStore((state) => state.board);
@@ -15,6 +16,7 @@ export const BoardPage = () => {
         </div>
       </PageWrapper>
       <AddTaskDialog />
+      <EditTaskModal />
     </>
   );
 };

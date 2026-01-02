@@ -13,7 +13,9 @@ interface IProp {
 }
 
 export const BoardColumn: FC<IProp> = ({ column }) => {
-  const { data: tasks } = useGetTasks(column.id);
+  const { data: tasks } = useGetTasks({
+    boardColumnId: column.id,
+  });
   const handleAddTask = () => {
     useBoardStore.getState().setAddTaskModal(true);
     useBoardStore.getState().setSelectedColumnId(column.id);

@@ -2,7 +2,13 @@ import { requestHandler } from "../helpers/requestHandler.js";
 import { Dashboard } from "../models/Dashboard.js";
 
 export const getDashboards = requestHandler(async (req, res) => {
-  const result = await Dashboard.getDashboards();
+  const { projectId: id_project, name, boardId: id_dashboard } = req.query;
+
+  const result = await Dashboard.getDashboards({
+    id_project,
+    name,
+    id_dashboard,
+  });
 
   const data = result.map((res) => ({
     id: res.id_dashboard,

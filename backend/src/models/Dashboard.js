@@ -1,22 +1,45 @@
 import { pool } from "../config/db.js";
 
 export class Dashboard {
-  static async getDashboards() {
-    const data = await pool.query(
-      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project , JSON_AGG(
-    JSON_BUILD_OBJECT(
-      'id', c.id_board_column,
-      'name', c.name,
-      'status', c.status,
-      'order', c.order
-    )
-    ORDER BY c.order
-  ) AS columns FROM boards d
-       LEFT JOIN projects p ON p.id_project = d.id_project
-       LEFT JOIN board_column c ON d.id_dashboard = c.id_dashboard
-       GROUP BY d.id_dashboard, d.name, d.description, d.created_at, d.id_project, p.name, p.description
-       ORDER BY d.created_at DESC`,
-    );
+  static async getDashboards(filters = {}) {
+    const conditions = [];
+    const values = [];
+
+    if (filters.id_project) {
+      values.push(filters.id_project);
+      conditions.push(`d.id_project = $${values.length}`);
+    }
+
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
+
+    const query = `
+    SELECT
+      d.id_dashboard,
+      d.name,
+      d.description,
+      d.created_at,
+      d.id_project,
+      p.name AS project_name,
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id', c.id_board_column,
+          'name', c.name,
+          'status', c.status,
+          'order', c.order
+        )
+        ORDER BY c.order
+      ) AS columns
+    FROM boards d
+    LEFT JOIN projects p ON p.id_project = d.id_project
+    LEFT JOIN board_column c ON d.id_dashboard = c.id_dashboard
+    ${whereClause}
+    GROUP BY d.id_dashboard, p.name
+    ORDER BY d.created_at DESC
+  `;
+
+    const data = await pool.query(query, values);
     return data.rows;
   }
 

@@ -5,3 +5,7 @@ export interface IAddTaskForm {
   priority: string | number;
   boardColumnId: string;
 }
+
+export interface IUpdateTask extends IAddTaskForm {
+  id: string;
+}

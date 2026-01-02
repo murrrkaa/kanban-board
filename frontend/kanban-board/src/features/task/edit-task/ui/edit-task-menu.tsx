@@ -9,7 +9,6 @@ import { EditIcon } from "@shared/ui/icons/edit-icon.tsx";
 import type { FC } from "react";
 import type { ITask } from "@entities/task/model/types.ts";
 import { useTaskStore } from "@entities/task/model/useTaskStore.tsx";
-import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
 import { useDeleteTask } from "@entities/task/model/use-delete-task.tsx";
@@ -24,7 +23,7 @@ export const EditTaskMenu: FC<IProp> = ({ task }) => {
 
   const handleEditTask = () => {
     useTaskStore.getState().setTask(task);
-    useBoardStore.getState().setEditTaskModal(true);
+    useTaskStore.getState().setEditTaskModal(true);
   };
 
   const handleRemoveTask = async () => {

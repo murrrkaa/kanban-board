@@ -7,5 +7,8 @@ export interface ITask {
   performerName: string;
   performerPatronymic: string;
   performerSurname: string;
-  priority: number;
+  priority: number | string;
+  projectId: string;
+  boardId: string;
+  boardColumnId: string;
 }

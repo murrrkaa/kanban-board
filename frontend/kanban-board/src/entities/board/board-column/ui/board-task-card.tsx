@@ -41,10 +41,10 @@ export const BoardTaskCard: FC<IProp> = ({ task }) => {
         className="text-[12px]/[14px] text-white font-light w-fit px-[15px] py-[5px] rounded-[12px] ml-auto"
         style={{
           backgroundColor:
-            TaskPriorityMeta[task.priority as TaskPriorityEnum].color,
+            TaskPriorityMeta[task.priority as TaskPriorityEnum]?.color,
         }}
       >
-        {TaskPriorityMeta[task.priority as TaskPriorityEnum].label}
+        {TaskPriorityMeta[task.priority as TaskPriorityEnum]?.label}
       </div>
     </div>
   );
