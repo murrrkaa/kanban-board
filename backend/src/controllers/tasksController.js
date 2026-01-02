@@ -28,7 +28,16 @@ export const deleteTask = requestHandler(async (req, res) => {
 });
 
 export const createTask = requestHandler(async (req, res) => {
-  const data = await Task.createTask(req.body);
+  const transformedData = {
+    name: req.body.name,
+    priority: req.body.priority,
+    id_board_column: req.body.boardColumnId,
+    id_performer: req.body.performerId,
+    description: req.body.description,
+  };
+
+  const data = await Task.createTask(transformedData);
+
   return {
     status: 200,
     data,

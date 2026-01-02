@@ -9,6 +9,10 @@ interface IBoardStore {
   setEditBoardModal: (editModal: boolean) => void;
   addBoardModal: boolean;
   setAddBoardModal: (addModal: boolean) => void;
+  addTaskModal: boolean;
+  setAddTaskModal: (addTaskModal: boolean) => void;
+  selectedColumnId: string | null;
+  setSelectedColumnId: (id: string | null) => void;
 }
 
 export const useBoardStore = create<IBoardStore>()(
@@ -21,6 +25,16 @@ export const useBoardStore = create<IBoardStore>()(
         set({ editBoardModal: editModal }),
       addBoardModal: false,
       setAddBoardModal: (addModal: boolean) => set({ addBoardModal: addModal }),
+      addTaskModal: false,
+      setAddTaskModal: (addTaskModal: boolean) => {
+        if (!addTaskModal) {
+          set({ addTaskModal, selectedColumnId: null });
+        } else {
+          set({ addTaskModal });
+        }
+      },
+      selectedColumnId: null,
+      setSelectedColumnId: (id: string | null) => set({ selectedColumnId: id }),
     }),
     { name: "board" },
   ),
