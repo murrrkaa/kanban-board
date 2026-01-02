@@ -3,4 +3,4 @@ import { RoutesEnum } from "@shared/routes";
 import type { IBoard } from "@features/board/board-cards/model/types.ts";
 
 export const updateBoard = async (form: IBoard) =>
-  await baseApi.put(`${RoutesEnum.DASHBOARDS}/${form.id}`, { data: form });
+  await baseApi.put(`${RoutesEnum.BOARDS}/${form.id}`, { data: form });

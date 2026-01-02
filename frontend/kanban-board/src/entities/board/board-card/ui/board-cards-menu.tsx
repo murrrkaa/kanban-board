@@ -29,7 +29,7 @@ export const BoardCardsMenu: FC<IProp> = ({ board }) => {
   const handleRemoveBoard = async () => {
     if (board) await deleteBoard(board.id);
     queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.DASHBOARDS],
+      queryKey: [RoutesEnum.BOARDS],
     });
   };
 

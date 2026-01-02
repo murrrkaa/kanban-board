@@ -15,7 +15,7 @@ export interface IRoute {
 }
 
 export const links: IRoute[] = [
-  { name: "Dashboards", route: RoutesEnum.DASHBOARDS, icon: DashboardsIcon },
+  { name: "Boards", route: RoutesEnum.BOARDS, icon: DashboardsIcon },
   { name: "Projects", route: RoutesEnum.PROJECTS, icon: ProjectsIcon },
   { name: "Tasks", route: RoutesEnum.TASKS, icon: TasksIcon },
   { name: "Users", route: RoutesEnum.USERS, icon: UsersIcon },

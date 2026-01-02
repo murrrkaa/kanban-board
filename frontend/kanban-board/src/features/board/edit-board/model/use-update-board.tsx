@@ -5,7 +5,7 @@ import type { IBoard } from "@features/board/board-cards/model/types.ts";
 
 export const useUpdateBoard = () => {
   return useMutation({
-    mutationKey: [RoutesEnum.DASHBOARDS],
+    mutationKey: [RoutesEnum.BOARDS],
     mutationFn: (data: IBoard) => updateBoard(data),
   });
 };

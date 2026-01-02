@@ -38,7 +38,7 @@ export const AddBoardForm = () => {
   const onSubmit = async (data: IAddBoardForm) => {
     await createBoard(data);
     queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.DASHBOARDS],
+      queryKey: [RoutesEnum.BOARDS],
     });
     useBoardStore.getState().setAddBoardModal(false);
   };

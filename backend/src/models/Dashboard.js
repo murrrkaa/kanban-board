@@ -3,7 +3,7 @@ import { pool } from "../config/db.js";
 export class Dashboard {
   static async getDashboards() {
     const data = await pool.query(
-      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM dashboards d
+      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM boards d
        LEFT JOIN projects p ON p.id_project = d.id_project
        ORDER BY d.created_at DESC`,
     );
@@ -18,7 +18,7 @@ export class Dashboard {
 
       const created_at = new Date();
       const data = await client.query(
-        `INSERT INTO dashboards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
+        `INSERT INTO boards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
         [name, description, created_at, id_project],
       );
 
@@ -62,7 +62,7 @@ export class Dashboard {
 
   static async deleteDashboard(id_dashboard) {
     const data = await pool.query(
-      `DELETE FROM dashboards WHERE id_dashboard=$1 RETURNING *`,
+      `DELETE FROM boards WHERE id_dashboard=$1 RETURNING *`,
       [id_dashboard],
     );
 
@@ -74,7 +74,7 @@ export class Dashboard {
 
   static async getDashboard(id_dashboard) {
     const data = await pool.query(
-      `SELECT * FROM dashboards WHERE id_dashboard=$1`,
+      `SELECT * FROM boards WHERE id_dashboard=$1`,
       [id_dashboard],
     );
 
@@ -86,7 +86,7 @@ export class Dashboard {
 
   static async updateDashboard(form) {
     const data = await pool.query(
-      `UPDATE dashboards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
+      `UPDATE boards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
       [form.id_dashboard, form.name, form.description],
     );
 

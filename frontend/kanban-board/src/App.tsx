@@ -9,6 +9,7 @@ import { ProfilePage } from "@/pages/profile/ui/profile-page.tsx";
 import { UsersPage } from "@/pages/users/ui/users-page.tsx";
 import { ProjectsPage } from "@/pages/projects/ui/projects-page.tsx";
 import { BoardsPage } from "@/pages/boards/ui/boards-page.tsx";
+import { BoardPage } from "@/pages/board/ui";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -20,7 +21,11 @@ function App() {
           {!isSignOut && <Navbar />}
           <Routes>
             <Route path="/" element={<Redirect />} />
-            <Route path={RoutesEnum.DASHBOARDS} element={<BoardsPage />} />
+            <Route path={RoutesEnum.BOARDS} element={<BoardsPage />} />
+            <Route
+              path={`${RoutesEnum.BOARDS}${RoutesEnum.BOARD_ID}`}
+              element={<BoardPage />}
+            />
             <Route path={RoutesEnum.PROJECTS} element={<ProjectsPage />} />
             <Route path={RoutesEnum.TASKS} element={<></>} />
             <Route path={RoutesEnum.USERS} element={<UsersPage />} />

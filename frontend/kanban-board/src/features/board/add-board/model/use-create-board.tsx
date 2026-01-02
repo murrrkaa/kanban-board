@@ -8,7 +8,7 @@ import { postBoard } from "@features/board/add-board/model/post-board.ts";
 
 export const useCreateBoard = () => {
   return useMutation({
-    mutationKey: [RoutesEnum.DASHBOARDS],
+    mutationKey: [RoutesEnum.BOARDS],
     mutationFn: (data: IAddBoardForm) => {
       const transformedData: IAddBoardDto = {
         name: data.name || "Новая доска",

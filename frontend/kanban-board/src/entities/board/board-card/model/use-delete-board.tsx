@@ -4,7 +4,7 @@ import { deleteBoard } from "@entities/board/board-card/model/delete-board.ts";
 
 export const useDeleteBoard = () => {
   return useMutation({
-    mutationKey: [RoutesEnum.DASHBOARDS],
+    mutationKey: [RoutesEnum.BOARDS],
     mutationFn: (id: string) => deleteBoard(id),
   });
 };
