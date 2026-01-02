@@ -40,7 +40,7 @@ export const EditBoardForm = () => {
     });
 
     query.invalidateQueries({
-      queryKey: [RoutesEnum.DASHBOARDS],
+      queryKey: [RoutesEnum.BOARDS],
     });
     setOpenDialog(false);
   };

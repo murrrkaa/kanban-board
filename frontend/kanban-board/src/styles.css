@@ -43,6 +43,10 @@
     border-radius: 8px;
     background-color: #707eae;
   }
+
+  .scrollbar-none::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 body {

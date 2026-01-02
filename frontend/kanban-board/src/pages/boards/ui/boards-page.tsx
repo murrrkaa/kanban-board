@@ -12,7 +12,7 @@ export const BoardsPage = () => {
   return (
     <>
       <PageWrapper
-        title="Dashboards"
+        title="Boards"
         leftSlot={
           <Button className="h-[40px]" onClick={handleOpenAddDialog}>
             Создание доски

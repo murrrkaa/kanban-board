@@ -2,19 +2,31 @@ import { Title } from "@shared/ui/components/title";
 import type { IBoard } from "@features/board/board-cards/model/types.ts";
 import type { FC } from "react";
 import { BoardCardsMenu } from "@entities/board/board-card/ui/board-cards-menu.tsx";
+import { Link } from "react-router-dom";
+import { RoutesEnum } from "@shared/routes";
+import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
 
 interface IProps {
   board: IBoard;
 }
 
 export const BoardCard: FC<IProps> = ({ board }) => {
+  const handleSelectBoard = () => {
+    useBoardStore.getState().setBoard(board);
+  };
   return (
     <div className="w-[366px] h-fit bg-white rounded-[16px] shadow-md">
       <div className="p-[15px] flex flex-col gap-[16px]">
         <div className="flex flex-row items-start justify-between gap-[8px]">
-          <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
-            {board?.name}
-          </Title>
+          <Link
+            to={`${RoutesEnum.BOARDS}/${board.id}`}
+            onClick={handleSelectBoard}
+          >
+            <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
+              {board?.name}
+            </Title>
+          </Link>
+
           <BoardCardsMenu board={board} />
         </div>
         {board?.projectName && (

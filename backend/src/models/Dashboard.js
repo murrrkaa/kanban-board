@@ -1,31 +1,106 @@
 import { pool } from "../config/db.js";
 
 export class Dashboard {
-  static async getDashboards() {
-    const data = await pool.query(
-      `SELECT d.name, d.description, d.created_at, d.id_dashboard, d.id_project, p.name as project_name, p.description as description_project FROM dashboards d
-       LEFT JOIN projects p ON p.id_project = d.id_project
-       ORDER BY d.created_at DESC`,
-    );
+  static async getDashboards(filters = {}) {
+    const conditions = [];
+    const values = [];
+
+    if (filters.id_project) {
+      values.push(filters.id_project);
+      conditions.push(`d.id_project = $${values.length}`);
+    }
+
+    if (filters.id_dashboard) {
+      values.push(filters.id_dashboard);
+      conditions.push(`d.id_dashboard = $${values.length}`);
+    }
+
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
+
+    const query = `
+    SELECT
+      d.id_dashboard,
+      d.name,
+      d.description,
+      d.created_at,
+      d.id_project,
+      p.name AS project_name,
+      JSON_AGG(
+        JSON_BUILD_OBJECT(
+          'id', c.id_board_column,
+          'name', c.name,
+          'status', c.status,
+          'order', c.order
+        )
+        ORDER BY c.order
+      ) AS columns
+    FROM boards d
+    LEFT JOIN projects p ON p.id_project = d.id_project
+    LEFT JOIN board_column c ON d.id_dashboard = c.id_dashboard
+    ${whereClause}
+    GROUP BY d.id_dashboard, p.name
+    ORDER BY d.created_at DESC
+  `;
+
+    const data = await pool.query(query, values);
     return data.rows;
   }
 
   static async createDashboard({ name, description = null, id_project }) {
-    const created_at = new Date();
-    const data = await pool.query(
-      `INSERT INTO dashboards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
-      [name, description, created_at, id_project],
-    );
+    const client = await pool.connect();
 
-    if (!data.rows.length)
-      throw { status: 404, message: "Dashboard Not Found" };
+    try {
+      await client.query("BEGIN");
 
-    return data.rows[0];
+      const created_at = new Date();
+      const data = await client.query(
+        `INSERT INTO boards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
+        [name, description, created_at, id_project],
+      );
+
+      if (!data.rows.length)
+        throw { status: 500, message: "Dashboard creation failed" };
+
+      const createdDashboard = data.rows[0];
+
+      const columns = [
+        { name: "New", status: "NEW", order: 1 },
+        { name: "In Progress", status: "IN_PROGRESS", order: 2 },
+        { name: "Done", status: "DONE", order: 3 },
+      ];
+
+      for (const column of columns) {
+        const created_at = new Date();
+        await client.query(
+          `
+        INSERT INTO board_column(name, status, "order", id_dashboard, created_at)
+        VALUES ($1, $2, $3, $4, $5)
+        `,
+          [
+            column.name,
+            column.status,
+            column.order,
+            createdDashboard.id_dashboard,
+            created_at,
+          ],
+        );
+      }
+
+      await client.query("COMMIT");
+      return createdDashboard;
+    } catch (e) {
+      await client.query("ROLLBACK");
+      throw e;
+    } finally {
+      client.release();
+    }
   }
 
   static async deleteDashboard(id_dashboard) {
     const data = await pool.query(
-      `DELETE FROM dashboards WHERE id_dashboard=$1 RETURNING *`,
+      `DELETE FROM boards WHERE id_dashboard=$1 RETURNING *`,
       [id_dashboard],
     );
 
@@ -37,7 +112,7 @@ export class Dashboard {
 
   static async getDashboard(id_dashboard) {
     const data = await pool.query(
-      `SELECT * FROM dashboards WHERE id_dashboard=$1`,
+      `SELECT * FROM boards WHERE id_dashboard=$1`,
       [id_dashboard],
     );
 
@@ -49,7 +124,7 @@ export class Dashboard {
 
   static async updateDashboard(form) {
     const data = await pool.query(
-      `UPDATE dashboards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
+      `UPDATE boards SET name=$2, description=$3 WHERE id_dashboard=$1 RETURNING *`,
       [form.id_dashboard, form.name, form.description],
     );
 
