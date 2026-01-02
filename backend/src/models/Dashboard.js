@@ -11,16 +11,53 @@ export class Dashboard {
   }
 
   static async createDashboard({ name, description = null, id_project }) {
-    const created_at = new Date();
-    const data = await pool.query(
-      `INSERT INTO dashboards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
-      [name, description, created_at, id_project],
-    );
+    const client = await pool.connect();
 
-    if (!data.rows.length)
-      throw { status: 404, message: "Dashboard Not Found" };
+    try {
+      await client.query("BEGIN");
 
-    return data.rows[0];
+      const created_at = new Date();
+      const data = await client.query(
+        `INSERT INTO dashboards(name, description, created_at, id_project) VALUES($1, $2, $3, $4) RETURNING *`,
+        [name, description, created_at, id_project],
+      );
+
+      if (!data.rows.length)
+        throw { status: 500, message: "Dashboard creation failed" };
+
+      const createdDashboard = data.rows[0];
+
+      const columns = [
+        { name: "New", status: "NEW", order: 1 },
+        { name: "In Progress", status: "IN_PROGRESS", order: 2 },
+        { name: "Done", status: "DONE", order: 3 },
+      ];
+
+      for (const column of columns) {
+        const created_at = new Date();
+        await client.query(
+          `
+        INSERT INTO board_column(name, status, "order", id_dashboard, created_at)
+        VALUES ($1, $2, $3, $4, $5)
+        `,
+          [
+            column.name,
+            column.status,
+            column.order,
+            createdDashboard.id_dashboard,
+            created_at,
+          ],
+        );
+      }
+
+      await client.query("COMMIT");
+      return createdDashboard;
+    } catch (e) {
+      await client.query("ROLLBACK");
+      throw e;
+    } finally {
+      client.release();
+    }
   }
 
   static async deleteDashboard(id_dashboard) {
