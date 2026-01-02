@@ -10,6 +10,11 @@ export class Dashboard {
       conditions.push(`d.id_project = $${values.length}`);
     }
 
+    if (filters.id_dashboard) {
+      values.push(filters.id_dashboard);
+      conditions.push(`d.id_dashboard = $${values.length}`);
+    }
+
     const whereClause = conditions.length
       ? `WHERE ${conditions.join(" AND ")}`
       : "";
