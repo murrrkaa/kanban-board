@@ -16,6 +16,7 @@ import {
   PopoverTrigger,
 } from "@shared/ui/components/popover";
 import { cn } from "@shared/lib/cn.ts";
+import { useEffect } from "react";
 
 export interface IOption {
   id: string;
@@ -41,8 +42,12 @@ export const Combobox = <T extends IOption>({
   const handleChangeValue = (currentValue: string) => {
     setValue(currentValue === value ? "" : currentValue);
     setOpen(false);
-    onChange(currentValue);
+    onChange(currentValue === value ? "" : currentValue);
   };
+
+  useEffect(() => {
+    setValue(selected);
+  }, [selected]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
