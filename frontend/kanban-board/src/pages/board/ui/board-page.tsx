@@ -3,6 +3,7 @@ import { useBoardStore } from "@entities/board/board-card/model/use-board-store.
 import { BoardColumn } from "@entities/board/board-column/ui";
 import { AddTaskDialog } from "@features/task/add-task/ui";
 import { EditTaskModal } from "@features/task/edit-task/ui/edit-task-modal.tsx";
+import { CommentTaskDialog } from "@features/task/comment-task/ui";
 
 export const BoardPage = () => {
   const board = useBoardStore((state) => state.board);
@@ -17,6 +18,7 @@ export const BoardPage = () => {
       </PageWrapper>
       <AddTaskDialog />
       <EditTaskModal />
+      <CommentTaskDialog />
     </>
   );
 };

@@ -33,6 +33,11 @@ export const EditTaskMenu: FC<IProp> = ({ task }) => {
     });
   };
 
+  const handleCommentTask = () => {
+    useTaskStore.getState().setSelectedTask(task);
+    useTaskStore.getState().setCommentTaskModal(true);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,6 +46,9 @@ export const EditTaskMenu: FC<IProp> = ({ task }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
+        <DropdownMenuItem onClick={handleCommentTask}>
+          Прокомментировать
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleEditTask}>
           Редактировать
         </DropdownMenuItem>
