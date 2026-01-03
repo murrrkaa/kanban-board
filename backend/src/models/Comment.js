@@ -44,9 +44,10 @@ export class Comment {
     return data.rows[0];
   }
   static async deleteComment(id_comment) {
-    const data = await pool.query(`DELETE FROM comments WHERE id_comment=$1`, [
-      id_comment,
-    ]);
+    const data = await pool.query(
+      `DELETE FROM comments WHERE id_comment=$1 RETURNING *`,
+      [id_comment],
+    );
 
     if (!data.rows.length) throw { status: 404, message: "Comment Not Found" };
 

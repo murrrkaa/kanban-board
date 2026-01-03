@@ -56,6 +56,7 @@ export const CommentsForm = () => {
         variant="outline"
         className="w-[45px] h-[45px] p-0"
         onClick={handleSendComment}
+        disabled={!value.trim()}
       >
         <SendIcon size={16} />
       </Button>
