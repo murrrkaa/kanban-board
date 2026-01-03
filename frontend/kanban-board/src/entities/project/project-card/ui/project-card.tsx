@@ -2,6 +2,8 @@ import type { FC } from "react";
 import { Title } from "@shared/ui/components/title";
 import { ProjectsCardsMenu } from "@entities/project/project-card/ui/projects-cards-menu.tsx";
 import type { IProjectDto } from "@features/project/project-card/model/types.ts";
+import { Link } from "react-router-dom";
+import { RoutesEnum } from "@shared/routes";
 
 interface IProps {
   project: IProjectDto;
@@ -13,9 +15,12 @@ export const ProjectCard: FC<IProps> = ({ project }) => {
     <div className="w-[366px] h-[260px] bg-white rounded-[16px] shadow-md">
       <div className="p-[15px] flex flex-col gap-[16px]">
         <div className="flex flex-row items-start justify-between gap-[8px]">
-          <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
-            {project?.name}
-          </Title>
+          <Link to={`${RoutesEnum.BOARDS}?projectId=${project.id}`}>
+            <Title size="sm" className="line-clamp-2 trunacate text-ellipsis">
+              {project?.name}
+            </Title>
+          </Link>
+
           <ProjectsCardsMenu project={project} />
         </div>
         {project?.performer && (
