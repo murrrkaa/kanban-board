@@ -42,11 +42,15 @@ export class Task {
       u.patronymic as "performerPatronymic",
       b.id_dashboard as "boardId",
       boards.id_project as "projectId",
-      t.id_board_column as "boardColumnId"
+      t.id_board_column as "boardColumnId",
+      b.status as "boardColumnName",
+      boards.name as "boardName",
+      p.name as "projectName"
     FROM tasks t
     LEFT JOIN users u ON u.id_user = t.id_performer
     LEFT JOIN board_column b ON t.id_board_column = b.id_board_column
     LEFT JOIN boards ON boards.id_dashboard = b.id_dashboard
+    LEFT JOIN projects p ON boards.id_project = p.id_project
     ${whereClause}
     ORDER BY t.created_at DESC
   `;
