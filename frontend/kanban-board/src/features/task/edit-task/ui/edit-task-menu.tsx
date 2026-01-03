@@ -22,7 +22,7 @@ export const EditTaskMenu: FC<IProp> = ({ task }) => {
   const queryClient = useQueryClient();
 
   const handleEditTask = () => {
-    useTaskStore.getState().setTask(task);
+    useTaskStore.getState().setSelectedTask(task);
     useTaskStore.getState().setEditTaskModal(true);
   };
 

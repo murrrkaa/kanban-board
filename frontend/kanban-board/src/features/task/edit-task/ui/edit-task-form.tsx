@@ -16,7 +16,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
 
 export const EditTaskForm = () => {
-  const task = useTaskStore.getState().task;
+  const task = useTaskStore.getState().selectedTask;
   const { mutateAsync: updateTask } = useUpdateTask();
   const queryClient = useQueryClient();
   const {

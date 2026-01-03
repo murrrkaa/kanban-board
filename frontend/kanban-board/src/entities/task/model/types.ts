@@ -11,4 +11,7 @@ export interface ITask {
   projectId: string;
   boardId: string;
   boardColumnId: string;
+  projectName?: string;
+  boardName?: string;
+  boardColumnName?: string;
 }

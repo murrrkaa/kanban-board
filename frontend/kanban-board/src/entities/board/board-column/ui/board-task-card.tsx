@@ -1,11 +1,8 @@
 import { Title } from "@shared/ui/components/title";
-import {
-  TaskPriorityEnum,
-  TaskPriorityMeta,
-} from "@shared/model/task-priority.ts";
 import type { ITask } from "@entities/task/model/types.ts";
 import type { FC } from "react";
 import { EditTaskMenu } from "@features/task/edit-task/ui/edit-task-menu.tsx";
+import { StatusTag } from "@shared/ui/components/status-tag/ui";
 
 interface IProp {
   task: ITask;
@@ -36,16 +33,11 @@ export const BoardTaskCard: FC<IProp> = ({ task }) => {
           </span>
         </div>
       )}
-
-      <div
-        className="text-[12px]/[14px] text-white font-light w-fit px-[15px] py-[5px] rounded-[12px] ml-auto"
-        style={{
-          backgroundColor:
-            TaskPriorityMeta[task.priority as TaskPriorityEnum]?.color,
-        }}
-      >
-        {TaskPriorityMeta[task.priority as TaskPriorityEnum]?.label}
-      </div>
+      {task?.priority && (
+        <div className="ml-auto">
+          <StatusTag priority={task.priority} />
+        </div>
+      )}
     </div>
   );
 };
