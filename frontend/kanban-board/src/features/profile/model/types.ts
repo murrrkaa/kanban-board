@@ -3,4 +3,5 @@ export interface IFormData {
   surname: string;
   patronymic?: string | undefined;
   login: string;
+  roleId?: string;
 }

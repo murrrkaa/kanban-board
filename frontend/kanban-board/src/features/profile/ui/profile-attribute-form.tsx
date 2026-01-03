@@ -6,12 +6,15 @@ import type { IFormData } from "@features/profile/model/types.ts";
 import { useUpdateUser } from "@features/profile/model/use-update-user.tsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { profileScheme } from "@features/profile/model/scheme.ts";
+import { useRolesStore } from "@entities/role/model/use-roles-store.tsx";
 
 interface IProps {
   userInfo: IUser | null;
 }
 
 export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
+  const rolesList = useRolesStore().roles;
+
   const { mutate: updateUser } = useUpdateUser();
   const {
     control,
@@ -24,6 +27,8 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
       surname: userInfo?.surname,
       patronymic: userInfo?.patronymic,
       login: userInfo?.login,
+      roleId:
+        rolesList?.find((role) => role.id === userInfo?.roleId)?.name || "",
     },
   });
   const onSubmitData = async (field: keyof IFormData, value: string) => {
@@ -93,6 +98,24 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
         name="login"
         control={control}
       />
+      <div className="mt-[20px]">
+        <Controller
+          render={({ field }) => (
+            <EditAttribute
+              isEditable={false}
+              label="Роль"
+              value={field.value ?? ""}
+              onChange={(value) => {
+                field.onChange(value);
+              }}
+              onBlur={(value) => onSubmitData(field.name, value)}
+              error={errors?.login?.message}
+            />
+          )}
+          name="roleId"
+          control={control}
+        />
+      </div>
     </div>
   );
 };

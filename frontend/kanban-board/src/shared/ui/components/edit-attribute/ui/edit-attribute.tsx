@@ -8,6 +8,7 @@ export interface IAttribute {
   onChange: (value: string) => void;
   onBlur: (value: string) => void;
   error?: string;
+  isEditable?: boolean;
 }
 
 export const EditAttribute: FC<IAttribute> = ({
@@ -16,6 +17,7 @@ export const EditAttribute: FC<IAttribute> = ({
   onChange,
   error,
   onBlur,
+  isEditable = true,
 }) => {
   const [val, setVal] = useState<string>(value);
   const [editable, setEditable] = useState(false);
@@ -34,7 +36,7 @@ export const EditAttribute: FC<IAttribute> = ({
   return (
     <>
       <div className="w-full flex flex-row justify-start items-center gap-[32px] h-[35px]">
-        <div className="w-[186px] text-gray-500 font-normal text-[12px]/[14px]">
+        <div className="w-[186px] text-blue-500 font-medium text-[12px]/[14px]">
           {label}
         </div>
         <div
@@ -46,6 +48,7 @@ export const EditAttribute: FC<IAttribute> = ({
           onBlur={onBlurHandler}
         >
           <Input
+            disabled={!isEditable}
             placeholder=""
             inputSize="small"
             value={val}
