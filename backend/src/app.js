@@ -26,7 +26,7 @@ app.use("/api/roles", authMiddleware, roleRouter);
 app.use("/api/projects", authMiddleware, projectRouter);
 app.use("/api/boards", authMiddleware, dashboardRoutes);
 app.use("/api/tasks", authMiddleware, taskRouter);
-app.use("/api/tasks/:id/comments", authMiddleware, commentRouter);
+app.use("/api/comments", authMiddleware, commentRouter);
 app.use("/api/login", loginRouter);
 
 app.use((err, req, res, next) => errorHandler(err, req, res, next));
