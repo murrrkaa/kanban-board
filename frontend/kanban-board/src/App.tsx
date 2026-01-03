@@ -10,6 +10,7 @@ import { UsersPage } from "@/pages/users/ui/users-page.tsx";
 import { ProjectsPage } from "@/pages/projects/ui/projects-page.tsx";
 import { BoardsPage } from "@/pages/boards/ui/boards-page.tsx";
 import { BoardPage } from "@/pages/board/ui";
+import { TasksPage } from "@/pages/tasks/ui";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -27,7 +28,7 @@ function App() {
               element={<BoardPage />}
             />
             <Route path={RoutesEnum.PROJECTS} element={<ProjectsPage />} />
-            <Route path={RoutesEnum.TASKS} element={<></>} />
+            <Route path={RoutesEnum.TASKS} element={<TasksPage />} />
             <Route path={RoutesEnum.USERS} element={<UsersPage />} />
             <Route path={RoutesEnum.PROFILE} element={<ProfilePage />} />
             <Route path={RoutesEnum.LOGIN} element={<SignInPage />} />

@@ -14,7 +14,10 @@ export const TableHeaderCell: FC<ITableProps> = ({
 }) => {
   return (
     <th
-      className={cn("text-gray-50 font-medium text-left", className)}
+      className={cn(
+        "text-nowrap text-gray-50 font-medium text-left",
+        className,
+      )}
       ref={ref}
     >
       {children}
