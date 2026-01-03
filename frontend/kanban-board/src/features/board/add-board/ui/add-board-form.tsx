@@ -9,8 +9,12 @@ import { useGetProjects } from "@features/project/project-card/model/use-get-pro
 import type { IAddBoardForm } from "@features/board/add-board/model/types.ts";
 import { useCreateBoard } from "@features/board/add-board/model/use-create-board.tsx";
 import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
+import { useSearchParams } from "react-router-dom";
 
 export const AddBoardForm = () => {
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("projectId");
+
   const { data: projects } = useGetProjects();
 
   const { mutateAsync: createBoard } = useCreateBoard();
@@ -31,7 +35,7 @@ export const AddBoardForm = () => {
     defaultValues: {
       name: "",
       description: "",
-      projectId: "",
+      projectId: projectId ?? "",
     },
   });
 
