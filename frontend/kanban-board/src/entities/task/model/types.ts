@@ -1,3 +1,14 @@
+export interface IComment {
+  id?: string;
+  content: string;
+  createdAt?: string;
+  authorId: string;
+  authorName?: string;
+  authorSurname?: string;
+  authorPatronymic?: string;
+  taskId?: string;
+}
+
 export interface ITask {
   id: string;
   name: string;
@@ -14,4 +25,5 @@ export interface ITask {
   projectName?: string;
   boardName?: string;
   boardColumnName?: string;
+  comments?: IComment[];
 }

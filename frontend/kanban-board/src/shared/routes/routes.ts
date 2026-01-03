@@ -7,5 +7,5 @@ export enum RoutesEnum {
   LOGIN = "/login",
   ROLES = "/roles",
   BOARD_ID = "/:boardId",
-  BY_COLUMN_BOARD = "/byColumnBoard",
+  COMMENTS = "/comments",
 }

@@ -8,6 +8,8 @@ interface ITaskStore {
   setSelectedTask: (task: ITask | null) => void;
   editTaskModal: boolean;
   setEditTaskModal: (addTaskModal: boolean) => void;
+  commentTaskModal: boolean;
+  setCommentTaskModal: (addTaskModal: boolean) => void;
 }
 
 export const useTaskStore = create<ITaskStore>((set) => ({
@@ -17,4 +19,6 @@ export const useTaskStore = create<ITaskStore>((set) => ({
   setSelectedTask: (selectedTask: ITask | null) => set({ selectedTask }),
   editTaskModal: false,
   setEditTaskModal: (editTaskModal: boolean) => set({ editTaskModal }),
+  commentTaskModal: false,
+  setCommentTaskModal: (commentTaskModal: boolean) => set({ commentTaskModal }),
 }));

@@ -4,7 +4,7 @@ import { getTasks } from "@entities/board/board-column/model/get-tasks.ts";
 
 export const useGetTasks = (filters?: { boardColumnId: string }) => {
   return useQuery({
-    queryKey: [RoutesEnum.BOARDS, filters?.boardColumnId],
+    queryKey: [RoutesEnum.TASKS, filters?.boardColumnId],
     queryFn: () => getTasks(filters),
     retry: false,
     refetchOnWindowFocus: false,

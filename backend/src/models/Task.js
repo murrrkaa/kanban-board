@@ -45,7 +45,24 @@ export class Task {
       t.id_board_column as "boardColumnId",
       b.status as "boardColumnName",
       boards.name as "boardName",
-      p.name as "projectName"
+      p.name as "projectName",
+         (
+      SELECT COALESCE(JSON_AGG(comm_list), '[]')
+      FROM (
+        SELECT 
+          c.id_comment as "id",
+          c.id_author as "authorId",
+          c.content as "content",
+          c.created_at as "createdAt",
+          u.name as "authorName",
+          u.surname as "authorSurname",
+          u.patronymic as "authorPatronymic"
+        FROM comments c
+        LEFT JOIN users u ON u.id_user = c.id_author
+        WHERE c.id_task = t.id_task
+        ORDER BY c.created_at ASC
+      ) comm_list
+    ) AS comments
     FROM tasks t
     LEFT JOIN users u ON u.id_user = t.id_performer
     LEFT JOIN board_column b ON t.id_board_column = b.id_board_column

@@ -10,8 +10,12 @@ export const getComments = requestHandler(async (req, res) => {
   };
 });
 export const createComment = requestHandler(async (req, res) => {
-  const { id: id_task } = req.params;
-  const data = await Comment.createComment({ ...req.body, id_task });
+  const form = {
+    content: req.body.content,
+    id_task: req.body.taskId,
+    id_author: req.body.authorId,
+  };
+  const data = await Comment.createComment(form);
   return {
     status: 201,
     data,
