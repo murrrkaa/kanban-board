@@ -12,6 +12,7 @@ import { useTaskStore } from "@entities/task/model/useTaskStore.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
 import { useDeleteTask } from "@entities/task/model/use-delete-task.tsx";
+import { useBoardStore } from "@entities/board/board-card/model/use-board-store.tsx";
 
 interface IProp {
   task: ITask;
@@ -27,9 +28,13 @@ export const EditTaskMenu: FC<IProp> = ({ task }) => {
   };
 
   const handleRemoveTask = async () => {
+    const boardId = useBoardStore.getState().board?.id ?? "";
     if (task) await deleteTask(task.id);
     queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.BOARDS],
+      queryKey: [RoutesEnum.BOARDS, boardId],
+    });
+    queryClient.invalidateQueries({
+      queryKey: [RoutesEnum.TASKS],
     });
   };
 

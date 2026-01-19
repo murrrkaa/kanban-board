@@ -46,7 +46,19 @@ export const deleteDashboard = requestHandler(async (req, res) => {
 });
 export const getDashboard = requestHandler(async (req, res) => {
   const { id: id_dashboard } = req.params;
-  const data = await Dashboard.getDashboard(id_dashboard);
+  const result = await Dashboard.getDashboard(id_dashboard);
+
+  const data = {
+    id: result.id_dashboard,
+    name: result.name,
+    description: result.description,
+    projectName: result.project_name,
+    projectId: result.id_project,
+    projectDescription: result.description_project,
+    createdAt: result.created_at,
+    columns: result.columns,
+  };
+
   return {
     status: 200,
     data,

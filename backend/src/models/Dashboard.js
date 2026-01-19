@@ -111,15 +111,9 @@ export class Dashboard {
   }
 
   static async getDashboard(id_dashboard) {
-    const data = await pool.query(
-      `SELECT * FROM boards WHERE id_dashboard=$1`,
-      [id_dashboard],
-    );
-
-    if (!data.rows.length)
-      throw { status: 404, message: "Dashboard Not Found" };
-
-    return data.rows[0];
+    const boards = await this.getDashboards({ id_dashboard });
+    if (!boards.length) throw { status: 404, message: "Dashboard Not Found" };
+    return boards[0];
   }
 
   static async updateDashboard(form) {

@@ -47,9 +47,11 @@ export const AddTaskForm = () => {
         boardColumnId: columnId,
         priority: Number(data.priority),
       });
+
       queryClient.invalidateQueries({
-        queryKey: [RoutesEnum.BOARDS, columnId],
+        queryKey: [RoutesEnum.TASKS, columnId],
       });
+
       useBoardStore.getState().setAddTaskModal(false);
     }
   };
