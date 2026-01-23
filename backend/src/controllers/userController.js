@@ -11,6 +11,15 @@ export const getUsers = requestHandler(async (req, res) => {
 });
 
 export const createUser = requestHandler(async (req, res) => {
+  const existingUser = await User.getUserByLogin(req.body.login);
+
+  if (existingUser.id_user) {
+    throw {
+      status: 409,
+      message: "Пользователь с таким логином уже существует",
+    };
+  }
+
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   const data = await User.createUser({

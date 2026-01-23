@@ -15,11 +15,11 @@ export const AddUserForm = () => {
   const rolesList = useRolesStore().roles;
 
   const queryClient = useQueryClient();
-  const { mutateAsync: createUser } = useCreateUser();
   const {
     control,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<IAddUserFormData>({
     resolver: zodResolver(addUserScheme),
     defaultValues: {
@@ -30,13 +30,14 @@ export const AddUserForm = () => {
       surname: "",
     },
   });
+  const { mutateAsync: createUser, isSuccess } = useCreateUser(setError);
 
   const onSubmit = async (data: IAddUserFormData) => {
     await createUser(data);
     queryClient.invalidateQueries({
       queryKey: [RoutesEnum.USERS],
     });
-    useUserDialogStore.getState().setOpenAddDialog(false);
+    isSuccess && useUserDialogStore.getState().setOpenAddDialog(false);
   };
   return (
     <div className="h-full">

@@ -4,7 +4,7 @@ import type { IAddUserFormData } from "@features/user/edit-user/model/types.ts";
 import { postUser } from "@entities/user/model/post-user.ts";
 import type { IUserDto } from "@entities/auth/model/types.ts";
 
-export const useCreateUser = () => {
+export const useCreateUser = (setError: any) => {
   return useMutation({
     mutationKey: [RoutesEnum.USERS],
     mutationFn: (data: IAddUserFormData) => {
@@ -17,6 +17,11 @@ export const useCreateUser = () => {
         password: data.password,
       };
       return postUser(transformedData);
+    },
+    onError: (e: any) => {
+      setError("login", {
+        message: e.error,
+      });
     },
   });
 };
