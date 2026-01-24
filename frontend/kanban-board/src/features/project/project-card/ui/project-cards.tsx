@@ -9,9 +9,7 @@ interface IProps {
 }
 
 export const ProjectCards: FC<IProps> = ({ projectName }) => {
-  const { data, isLoading } = useGetProjects(projectName);
-
-  if (isLoading) return null;
+  const { data } = useGetProjects(projectName);
 
   return (
     <TableWrapper className="p-[30px] flex flex-row flex-wrap gap-[8px]">

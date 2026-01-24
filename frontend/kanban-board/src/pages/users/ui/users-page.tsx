@@ -7,9 +7,11 @@ import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.t
 import { useAuthStore } from "@entities/auth/model/use-auth-store.ts";
 import { Input } from "@shared/ui/components/input";
 import { useState } from "react";
+import { useDebounce } from "@shared/hooks/use-debounce.tsx";
 
 export const UsersPage = () => {
   const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value, 400);
 
   const user = useAuthStore.getState().user;
 
@@ -41,7 +43,7 @@ export const UsersPage = () => {
           </div>
         }
       >
-        <UserTable searchName={value} />
+        <UserTable searchName={debounceValue} />
       </PageWrapper>
       <EditUserDialog />
       <AddUserDialog />

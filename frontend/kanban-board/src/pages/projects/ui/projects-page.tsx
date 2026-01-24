@@ -6,9 +6,11 @@ import { Button } from "@shared/ui/components/button";
 import { useProjectsStore } from "@entities/project/project-card/model/use-projects-store.tsx";
 import { Input } from "@shared/ui/components/input";
 import { useState } from "react";
+import { useDebounce } from "@shared/hooks/use-debounce.tsx";
 
 export const ProjectsPage = () => {
   const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value, 400);
 
   const handleOpenAddDialog = () => {
     useProjectsStore.getState().setAddProjectModal(true);
@@ -33,7 +35,7 @@ export const ProjectsPage = () => {
           </div>
         }
       >
-        <ProjectCards projectName={value} />
+        <ProjectCards projectName={debounceValue} />
       </PageWrapper>
       <EditProjectModal />
       <AddProjectDialog />
