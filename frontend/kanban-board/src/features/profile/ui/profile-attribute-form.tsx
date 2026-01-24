@@ -1,6 +1,6 @@
 import { EditAttribute } from "@shared/ui/components/edit-attribute/ui";
 import type { IUser } from "@entities/auth/model/types.ts";
-import type { FC } from "react";
+import { type FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { IFormData } from "@features/profile/model/types.ts";
 import { useUpdateUser } from "@features/profile/model/use-update-user.tsx";
@@ -20,6 +20,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
     control,
     formState: { errors },
     trigger,
+    reset,
   } = useForm<IFormData>({
     resolver: zodResolver(profileScheme),
     defaultValues: {
@@ -36,6 +37,22 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
     const isValid = await trigger(field);
     if (isValid) updateUser({ field, value });
   };
+
+  useEffect(() => {
+    if (userInfo && rolesList.length > 0) {
+      const roleId =
+        rolesList?.find((role) => role.id === userInfo?.roleId)?.name || "";
+
+      reset({
+        name: userInfo.name,
+        login: userInfo.login,
+        roleId,
+        patronymic: userInfo.patronymic,
+        surname: userInfo.surname,
+      });
+    }
+  }, [userInfo, rolesList]);
+
   return (
     <div className="w-full p-[30px] mt-[20px] flex flex-col">
       <Controller
@@ -105,11 +122,6 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
               isEditable={false}
               label="Роль"
               value={field.value ?? ""}
-              onChange={(value) => {
-                field.onChange(value);
-              }}
-              onBlur={(value) => onSubmitData(field.name, value)}
-              error={errors?.login?.message}
             />
           )}
           name="roleId"

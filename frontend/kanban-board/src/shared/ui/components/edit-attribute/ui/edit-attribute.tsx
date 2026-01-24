@@ -5,8 +5,8 @@ import { cn } from "@shared/lib/cn.ts";
 export interface IAttribute {
   label: string;
   value: string;
-  onChange: (value: string) => void;
-  onBlur: (value: string) => void;
+  onChange?: (value: string) => void;
+  onBlur?: (value: string) => void;
   error?: string;
   isEditable?: boolean;
 }
@@ -19,20 +19,17 @@ export const EditAttribute: FC<IAttribute> = ({
   onBlur,
   isEditable = true,
 }) => {
-  const [val, setVal] = useState<string>(value);
   const [editable, setEditable] = useState(false);
 
   const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(val);
-    setVal(event.target.value);
+    onChange?.(event.target.value);
   };
 
-  const onBlurHandler = () => {
-    onChange(val);
-    onBlur(val);
+  const onBlurHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event.target.value);
+    onBlur?.(event.target.value);
     setEditable(false);
   };
-
   return (
     <>
       <div className="w-full flex flex-row justify-start items-center gap-[32px] h-[35px]">
@@ -45,17 +42,17 @@ export const EditAttribute: FC<IAttribute> = ({
             editable && "border border-blue-400",
           )}
           onClick={() => setEditable(!editable)}
-          onBlur={onBlurHandler}
         >
           <Input
             disabled={!isEditable}
             placeholder=""
             inputSize="small"
-            value={val}
+            value={value}
             classNames={{
               inputClassName: "rounded-none border-none",
             }}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeValue(e)}
+            onChange={onChangeValue}
+            onBlur={onBlurHandler}
           />
         </div>
       </div>

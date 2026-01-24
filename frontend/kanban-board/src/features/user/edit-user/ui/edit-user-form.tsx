@@ -3,10 +3,7 @@ import { Button } from "@shared/ui/components/button";
 import { Controller, useForm } from "react-hook-form";
 import type { IEditUserFormData } from "@features/user/edit-user/model/types.ts";
 import { useUpdateUser } from "@features/user/edit-user/model/use-update-user.tsx";
-import { useQueryClient } from "@tanstack/react-query";
-import { RoutesEnum } from "@shared/routes";
 import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
-import { useShallow } from "zustand/react/shallow";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editUserScheme } from "@features/user/edit-user/ui/scheme.ts";
 import { Combobox } from "@shared/ui/components/combobox";
@@ -15,22 +12,13 @@ import type { IOption } from "@shared/ui/components/combobox/combobox.tsx";
 
 export const EditUserForm = () => {
   const rolesList = useRolesStore().roles;
-
-  const { mutateAsync: updateUser } = useUpdateUser();
-  const queryClient = useQueryClient();
-
-  const { setOpenDialog, user } = useUserDialogStore(
-    useShallow((state) => ({
-      open: state.openEditDialog,
-      setOpenDialog: state.setOpenEditDialog,
-      user: state.user,
-    })),
-  );
+  const user = useUserDialogStore((state) => state.user);
 
   const {
     control,
     handleSubmit,
     formState: { isDirty, errors },
+    setError,
   } = useForm<IEditUserFormData>({
     resolver: zodResolver(editUserScheme),
     defaultValues: {
@@ -42,20 +30,16 @@ export const EditUserForm = () => {
     },
   });
 
-  const onSubmit = async (data: IEditUserFormData) => {
+  const { mutate: updateUser } = useUpdateUser(setError);
+
+  const onSubmit = (data: IEditUserFormData) => {
     if (user)
-      await updateUser({
+      updateUser({
         id: user.id,
         data: {
           ...data,
         },
       });
-
-    queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.USERS],
-    });
-
-    setOpenDialog(false);
   };
   return (
     <div className="h-full">

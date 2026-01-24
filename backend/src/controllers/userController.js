@@ -11,6 +11,17 @@ export const getUsers = requestHandler(async (req, res) => {
 });
 
 export const createUser = requestHandler(async (req, res) => {
+  const existingUser = await User.getUserByLogin(req.body.login).catch(
+    () => {},
+  );
+
+  if (existingUser?.id_user) {
+    throw {
+      status: 409,
+      message: "Пользователь с таким логином уже существует",
+    };
+  }
+
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   const data = await User.createUser({
@@ -42,6 +53,17 @@ export const getUser = requestHandler(async (req, res) => {
 });
 
 export const updateUser = requestHandler(async (req, res) => {
+  const existingUser = await User.getUserByLogin(req.body.login).catch(
+    () => {},
+  );
+
+  if (existingUser?.id_user) {
+    throw {
+      status: 409,
+      message: "Пользователь с таким логином уже существует",
+    };
+  }
+
   const data = await User.updateUser(req.body);
   return {
     status: 200,

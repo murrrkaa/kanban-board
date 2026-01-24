@@ -5,6 +5,7 @@ export interface IInputProps {
   label?: string;
   value?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   classNames?: {
     inputClassName?: string;
