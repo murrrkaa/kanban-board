@@ -2,10 +2,10 @@ import { requestHandler } from "../helpers/requestHandler.js";
 import { Task } from "../models/Task.js";
 
 export const getTasks = requestHandler(async (req, res) => {
-  const { boardColumnId: id_board_column, name } = req.query;
+  const { boardColumnId: id_board_column, taskName } = req.query;
   const data = await Task.getTasks({
     id_board_column,
-    name,
+    taskName,
   });
   return {
     status: 200,

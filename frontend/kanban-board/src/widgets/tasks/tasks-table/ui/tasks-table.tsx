@@ -14,14 +14,18 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "@widgets/tasks/tasks-table/model/columns.tsx";
-import { useEffect } from "react";
+import { type FC, useEffect } from "react";
 import { useGetTasks } from "@entities/board/board-column/model/use-get-tasks.tsx";
 import { useTaskStore } from "@entities/task/model/useTaskStore.tsx";
 import type { ITask } from "@entities/task/model/types.ts";
 import { cn } from "@shared/lib/cn.ts";
 
-export const TasksTable = () => {
-  const { data, isSuccess } = useGetTasks();
+interface IProps {
+  taskName: string;
+}
+
+export const TasksTable: FC<IProps> = ({ taskName }) => {
+  const { data, isSuccess } = useGetTasks({ taskName });
   const tasks = useTaskStore((state) => state.tasks);
   const table = useReactTable({
     data: tasks ?? [],
