@@ -6,9 +6,11 @@ import { useBoardStore } from "@entities/board/board-card/model/use-board-store.
 import { AddBoardDialog } from "@features/board/add-board/ui/add-board-dialog.tsx";
 import { Input } from "@shared/ui/components/input";
 import { useState } from "react";
+import { useDebounce } from "@shared/hooks/use-debounce.tsx";
 
 export const BoardsPage = () => {
   const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value, 400);
 
   const handleOpenAddDialog = () => {
     useBoardStore.getState().setAddBoardModal(true);
@@ -33,7 +35,7 @@ export const BoardsPage = () => {
           </div>
         }
       >
-        <BoardCards boardName={value} />
+        <BoardCards boardName={debounceValue} />
       </PageWrapper>
       <EditBoardModal />
       <AddBoardDialog />

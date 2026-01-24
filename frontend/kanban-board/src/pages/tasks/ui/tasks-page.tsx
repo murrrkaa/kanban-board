@@ -4,9 +4,11 @@ import { EditTaskModal } from "@features/task/edit-task/ui/edit-task-modal.tsx";
 import { CommentTaskDialog } from "@features/task/comment-task/ui";
 import { Input } from "@shared/ui/components/input";
 import { useState } from "react";
+import { useDebounce } from "@shared/hooks/use-debounce.tsx";
 
 export const TasksPage = () => {
   const [value, setValue] = useState("");
+  const debounceValue = useDebounce(value, 400);
 
   return (
     <>
@@ -23,7 +25,7 @@ export const TasksPage = () => {
           />
         }
       >
-        <TasksTable taskName={value} />
+        <TasksTable taskName={debounceValue} />
       </PageWrapper>
       <EditTaskModal />
       <CommentTaskDialog />
