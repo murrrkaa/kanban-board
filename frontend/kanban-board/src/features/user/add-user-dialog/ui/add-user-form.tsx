@@ -5,16 +5,12 @@ import type { IAddUserFormData } from "@features/user/edit-user/model/types.ts";
 import { addUserScheme } from "@features/user/add-user-dialog/model/scheme.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateUser } from "@features/user/add-user-dialog/model/use-create-user.tsx";
-import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
-import { useQueryClient } from "@tanstack/react-query";
-import { RoutesEnum } from "@shared/routes";
 import { Combobox } from "@shared/ui/components/combobox";
 import { useRolesStore } from "@entities/role/model/use-roles-store.tsx";
 
 export const AddUserForm = () => {
   const rolesList = useRolesStore().roles;
 
-  const queryClient = useQueryClient();
   const {
     control,
     formState: { errors },
@@ -30,14 +26,10 @@ export const AddUserForm = () => {
       surname: "",
     },
   });
-  const { mutateAsync: createUser, isSuccess } = useCreateUser(setError);
+  const { mutate: createUser } = useCreateUser(setError);
 
-  const onSubmit = async (data: IAddUserFormData) => {
-    await createUser(data);
-    queryClient.invalidateQueries({
-      queryKey: [RoutesEnum.USERS],
-    });
-    isSuccess && useUserDialogStore.getState().setOpenAddDialog(false);
+  const onSubmit = (data: IAddUserFormData) => {
+    createUser(data);
   };
   return (
     <div className="h-full">

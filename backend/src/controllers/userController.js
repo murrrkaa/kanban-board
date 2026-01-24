@@ -11,9 +11,11 @@ export const getUsers = requestHandler(async (req, res) => {
 });
 
 export const createUser = requestHandler(async (req, res) => {
-  const existingUser = await User.getUserByLogin(req.body.login);
+  const existingUser = await User.getUserByLogin(req.body.login).catch(
+    () => {},
+  );
 
-  if (existingUser.id_user) {
+  if (existingUser?.id_user) {
     throw {
       status: 409,
       message: "Пользователь с таким логином уже существует",
