@@ -9,6 +9,7 @@ export const getComments = requestHandler(async (req, res) => {
     data,
   };
 });
+
 export const createComment = requestHandler(async (req, res) => {
   const form = {
     content: req.body.content,
@@ -21,6 +22,7 @@ export const createComment = requestHandler(async (req, res) => {
     data,
   };
 });
+
 export const deleteComment = requestHandler(async (req, res) => {
   const { id: id_comment } = req.params;
   const data = await Comment.deleteComment(id_comment);

@@ -44,6 +44,7 @@ export const deleteDashboard = requestHandler(async (req, res) => {
     data,
   };
 });
+
 export const getDashboard = requestHandler(async (req, res) => {
   const { id: id_dashboard } = req.params;
   const result = await Dashboard.getDashboard(id_dashboard);

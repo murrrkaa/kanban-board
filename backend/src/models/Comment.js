@@ -9,6 +9,7 @@ export class Comment {
 
     return data.rows;
   }
+
   static async createComment({ content, id_task, id_author }) {
     const created_at = new Date();
 
@@ -43,6 +44,7 @@ export class Comment {
 
     return data.rows[0];
   }
+
   static async deleteComment(id_comment) {
     const data = await pool.query(
       `DELETE FROM comments WHERE id_comment=$1 RETURNING *`,
