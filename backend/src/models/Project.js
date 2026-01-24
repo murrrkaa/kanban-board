@@ -1,13 +1,36 @@
 import { pool } from "../config/db.js";
 
 export class Project {
-  static async getProjects() {
-    const data = await pool.query(
-      `SELECT p.id_project, p.name, p.description, p.created_at, u.id_user as performer_id,u.name as performer_name, u.surname as performer_surname, u.patronymic as performer_patronymic FROM projects p 
-       LEFT JOIN users u ON p.id_created_by = u.id_user
-       ORDER BY p.created_at DESC`,
-    );
+  static async getProjects(filters) {
+    const conditions = [];
+    const values = [];
 
+    if (filters.projectName?.trim()) {
+      values.push(`%${filters.projectName.trim()}%`);
+      conditions.push(`p.name ILIKE $${values.length}`);
+    }
+
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
+
+    const query = `
+      SELECT 
+        p.id_project,
+        p.name,
+        p.description,
+        p.created_at,
+        u.id_user as performer_id,
+        u.name as performer_name,
+        u.surname as performer_surname,
+        u.patronymic as performer_patronymic
+      FROM projects p
+      LEFT JOIN users u ON p.id_created_by = u.id_user
+      ${whereClause}
+      ORDER BY p.created_at DESC
+    `;
+
+    const data = await pool.query(query, values);
     return data.rows;
   }
 

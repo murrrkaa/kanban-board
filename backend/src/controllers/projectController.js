@@ -2,7 +2,8 @@ import { Project } from "../models/Project.js";
 import { requestHandler } from "../helpers/requestHandler.js";
 
 export const getProjects = requestHandler(async (req, res) => {
-  const result = await Project.getProjects();
+  const { projectName } = req.query;
+  const result = await Project.getProjects({ projectName });
 
   const data = result.map((item) => ({
     id: item.id_project,
