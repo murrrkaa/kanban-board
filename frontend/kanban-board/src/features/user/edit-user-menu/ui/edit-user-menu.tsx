@@ -12,12 +12,14 @@ import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.t
 import { useDeleteUser } from "@entities/user/model/use-delete-user.tsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { RoutesEnum } from "@shared/routes";
+import { useAuthStore } from "@entities/auth/model/use-auth-store.ts";
 
 interface IProps {
   user: IUser;
 }
 
 export const EditUserMenu: FC<IProps> = ({ user }) => {
+  const currUser = useAuthStore.getState().user;
   const { mutateAsync: deleteUser } = useDeleteUser();
   const queryClient = useQueryClient();
 
@@ -34,6 +36,8 @@ export const EditUserMenu: FC<IProps> = ({ user }) => {
     useUserDialogStore.getState().setUser(null);
   };
 
+  const isDisabled = currUser?.roleName === "Пользователь";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,10 +46,12 @@ export const EditUserMenu: FC<IProps> = ({ user }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
-        <DropdownMenuItem onClick={handleEditUser}>
+        <DropdownMenuItem onClick={handleEditUser} disabled={isDisabled}>
           Редактировать
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleRemoveUser}>Удалить</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleRemoveUser} disabled={isDisabled}>
+          Удалить
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
