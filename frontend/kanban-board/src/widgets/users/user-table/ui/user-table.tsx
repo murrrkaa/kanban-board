@@ -9,7 +9,7 @@ import {
 import { TableWrapper } from "@shared/ui/components/table/table-wrapper/table-wrapper.tsx";
 import { useGetUsers } from "@entities/user/model/use-get-users.tsx";
 import { useUsersStore } from "@entities/user/model/use-users-store.tsx";
-import { useEffect } from "react";
+import { type FC, useEffect } from "react";
 import { convertUsersDto } from "@entities/user/model/convert-users-dto.ts";
 import {
   type Cell,
@@ -20,8 +20,13 @@ import {
 import { columns } from "@widgets/users/user-table/model/columns.tsx";
 import type { IUser } from "@entities/auth/model/types.ts";
 
-export const UserTable = () => {
-  const { data, isSuccess } = useGetUsers();
+interface IProps {
+  searchName: string;
+}
+
+export const UserTable: FC<IProps> = ({ searchName }) => {
+  const { data, isSuccess } = useGetUsers(searchName);
+
   const users = useUsersStore((state) => state.users);
   const table = useReactTable({
     data: users,
