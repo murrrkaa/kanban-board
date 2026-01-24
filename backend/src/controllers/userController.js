@@ -57,7 +57,7 @@ export const updateUser = requestHandler(async (req, res) => {
     () => {},
   );
 
-  if (existingUser?.id_user) {
+  if (existingUser?.id_user && existingUser?.id_user !== req.body.id_user) {
     throw {
       status: 409,
       message: "Пользователь с таким логином уже существует",

@@ -4,7 +4,9 @@ import { getBoards } from "@features/board/board-cards/model/get-boards.ts";
 
 export const useGetBoards = (filters: object) => {
   return useQuery({
-    queryKey: [RoutesEnum.BOARDS],
+    queryKey: [RoutesEnum.BOARDS, filters],
     queryFn: () => getBoards(filters),
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 };

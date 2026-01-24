@@ -54,7 +54,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
   }, [userInfo, rolesList]);
 
   return (
-    <div className="w-full p-[30px] mt-[20px] flex flex-col">
+    <div className="w-full py-[25px] px-[30px] mt-[20px] flex flex-col">
       <Controller
         render={({ field }) => (
           <EditAttribute

@@ -1,6 +1,5 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Task } from "../models/Task.js";
-import { User } from "../models/User.js";
 
 export const getTasks = requestHandler(async (req, res) => {
   const { boardColumnId: id_board_column, name } = req.query;
