@@ -16,8 +16,6 @@ export const BoardPage = () => {
     if (board) useBoardStore.getState().setBoard(board);
   }, [board]);
 
-  console.log(board);
-
   return (
     <>
       <PageWrapper title={board?.name ?? "Board"}>

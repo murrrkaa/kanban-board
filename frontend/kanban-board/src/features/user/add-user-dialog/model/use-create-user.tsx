@@ -28,9 +28,10 @@ export const useCreateUser = (setError: any) => {
       });
     },
     onError: (e: any) => {
-      setError("login", {
-        message: e.error,
-      });
+      if (e.status === 409)
+        setError("login", {
+          message: e.error,
+        });
     },
   });
 };
