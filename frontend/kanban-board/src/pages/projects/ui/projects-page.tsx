@@ -4,8 +4,12 @@ import { EditProjectModal } from "@features/project/edit-project/ui";
 import { AddProjectDialog } from "@features/project/add-project/ui";
 import { Button } from "@shared/ui/components/button";
 import { useProjectsStore } from "@entities/project/project-card/model/use-projects-store.tsx";
+import { Input } from "@shared/ui/components/input";
+import { useState } from "react";
 
 export const ProjectsPage = () => {
+  const [value, setValue] = useState("");
+
   const handleOpenAddDialog = () => {
     useProjectsStore.getState().setAddProjectModal(true);
   };
@@ -14,12 +18,22 @@ export const ProjectsPage = () => {
       <PageWrapper
         title="Projects"
         leftSlot={
-          <Button className="h-[40px]" onClick={handleOpenAddDialog}>
-            Создать новый проект
-          </Button>
+          <div className="flex flex-row gap-3 items-center">
+            <Input
+              value={value}
+              classNames={{
+                inputClassName: "w-[250px]",
+              }}
+              placeholder="Наименование проекта"
+              onChange={(e) => setValue(e.target.value)}
+            />
+            <Button className="h-[40px]" onClick={handleOpenAddDialog}>
+              Создать новый проект
+            </Button>
+          </div>
         }
       >
-        <ProjectCards />
+        <ProjectCards projectName={value} />
       </PageWrapper>
       <EditProjectModal />
       <AddProjectDialog />

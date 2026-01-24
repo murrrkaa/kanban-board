@@ -5,8 +5,8 @@ export class User {
     const conditions = [];
     const values = [];
 
-    if (filters.searchName) {
-      values.push(`%${filters.searchName}%`);
+    if (filters.searchName?.trim()) {
+      values.push(`%${filters.searchName.trim()}%`);
       conditions.push(`u.name ILIKE $${values.length}`);
     }
 
