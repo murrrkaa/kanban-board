@@ -28,7 +28,7 @@ export const UsersPage = () => {
               classNames={{
                 inputClassName: "w-[250px]",
               }}
-              placeholder="Поиск по Имени"
+              placeholder="Имя пользователя"
               onChange={(e) => setValue(e.target.value)}
             />
             <Button

@@ -5,25 +5,15 @@ export class Task {
     const conditions = [];
     const values = [];
 
-    Object.keys(filters).forEach((key) => {
-      const value = filters[key];
-      if (value !== undefined && value !== null) {
-        values.push(value);
-        switch (key) {
-          case "id_board_column":
-            conditions.push(`t.id_board_column = $${values.length}`);
-            break;
-          case "id_dashboard":
-            conditions.push(`b.id_dashboard = $${values.length}`);
-            break;
-          case "id_project":
-            conditions.push(`p.id_project = $${values.length}`);
-            break;
-          default:
-            conditions.push(`${key} = $${values.length}`);
-        }
-      }
-    });
+    if (filters.id_board_column) {
+      values.push(filters.id_board_column);
+      conditions.push(`t.id_board_column = $${values.length}`);
+    }
+
+    if (filters.taskName) {
+      values.push(`%${filters.taskName.trim()}%`);
+      conditions.push(`t.name ILIKE $${values.length}`);
+    }
 
     const whereClause = conditions.length
       ? `WHERE ${conditions.join(" AND ")}`
