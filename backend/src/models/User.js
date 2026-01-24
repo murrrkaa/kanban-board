@@ -1,12 +1,35 @@
 import { pool } from "../config/db.js";
 
 export class User {
-  static async getUsers() {
-    const data = await pool.query(
-      `SELECT u.id_user, u.name, u.surname, u.patronymic, u.login, u.id_role, r.name as role_name FROM users u 
-       LEFT JOIN roles r ON r.id_role = u.id_role
-       ORDER BY u.name ASC, u.surname ASC, u.login ASC`,
-    );
+  static async getUsers(filters) {
+    const conditions = [];
+    const values = [];
+
+    if (filters.searchName) {
+      values.push(`%${filters.searchName}%`);
+      conditions.push(`u.name ILIKE $${values.length}`);
+    }
+
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
+
+    const query = `
+      SELECT
+        u.id_user,
+        u.name,
+        u.surname,
+        u.patronymic,
+        u.login,
+        u.id_role,
+        r.name AS role_name
+      FROM users u
+      LEFT JOIN roles r ON r.id_role = u.id_role
+      ${whereClause}
+      ORDER BY u.name ASC, u.surname ASC, u.login ASC
+    `;
+
+    const data = await pool.query(query, values);
     return data.rows;
   }
 

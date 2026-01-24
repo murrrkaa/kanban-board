@@ -3,7 +3,9 @@ import { requestHandler } from "../helpers/requestHandler.js";
 import bcrypt from "bcrypt";
 
 export const getUsers = requestHandler(async (req, res) => {
-  const data = await User.getUsers();
+  const { searchName } = req.query;
+
+  const data = await User.getUsers({ searchName });
   return {
     status: 200,
     data,
