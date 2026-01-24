@@ -3,13 +3,19 @@ import { BoardCard } from "@entities/board/board-card/ui/board-card.tsx";
 import { useGetBoards } from "@features/board/board-cards/model/use-get-boards.tsx";
 import { useSearchParams } from "react-router-dom";
 import { EmptyBoards } from "@/pages/boards/ui/empty-boards.tsx";
+import type { FC } from "react";
 
-export const BoardCards = () => {
+interface IProps {
+  boardName?: string;
+}
+
+export const BoardCards: FC<IProps> = ({ boardName }) => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
 
   const { data } = useGetBoards({
     projectId,
+    boardName,
   });
 
   return (
