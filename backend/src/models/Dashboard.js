@@ -15,6 +15,11 @@ export class Dashboard {
       conditions.push(`d.id_dashboard = $${values.length}`);
     }
 
+    if (filters.boardName) {
+      values.push(`%${filters.boardName.trim()}%`);
+      conditions.push(`d.name ILIKE $${values.length}`);
+    }
+
     const whereClause = conditions.length
       ? `WHERE ${conditions.join(" AND ")}`
       : "";
