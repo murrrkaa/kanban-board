@@ -31,6 +31,7 @@ export const patronymicScheme = z
   .string()
   .max(150, patronymicMessage)
   .regex(/^[а-яА-ЯЁё]+$/, patronymicMessage)
+  .or(z.literal(""))
   .optional();
 
 export const profileScheme = z.object({
