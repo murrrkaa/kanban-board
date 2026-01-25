@@ -9,11 +9,11 @@ interface IProps {
 }
 
 export const ProjectCards: FC<IProps> = ({ projectName }) => {
-  const { data } = useGetProjects(projectName);
+  const { data, isLoading, isSuccess } = useGetProjects(projectName);
 
   return (
     <TableWrapper className="p-[30px] flex flex-row flex-wrap gap-[8px]">
-      {data && data.length > 0 ? (
+      {!isLoading && isSuccess && data && data.length > 0 ? (
         data?.map((project) => (
           <ProjectCard project={project} key={project.id} />
         ))
