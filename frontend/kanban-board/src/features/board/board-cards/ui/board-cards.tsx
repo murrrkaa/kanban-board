@@ -13,14 +13,14 @@ export const BoardCards: FC<IProps> = ({ boardName }) => {
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get("projectId");
 
-  const { data } = useGetBoards({
+  const { data, isLoading, isSuccess } = useGetBoards({
     projectId,
     boardName,
   });
 
   return (
     <TableWrapper className="p-[30px] flex flex-row flex-wrap gap-[8px]">
-      {data && data?.length > 0 ? (
+      {!isLoading && isSuccess && data && data?.length > 0 ? (
         data?.map((board, index) => <BoardCard board={board} key={index} />)
       ) : (
         <EmptyBoards />
