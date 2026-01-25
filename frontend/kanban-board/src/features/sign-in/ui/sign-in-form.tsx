@@ -6,8 +6,10 @@ import type { SignInFormData } from "@features/sign-in/model/types.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInScheme } from "@features/sign-in/model/resolver.ts";
 import { useLogin } from "@features/sign-in/model/use-login.tsx";
+import { useState } from "react";
 
 export const SignInForm = () => {
+  const [show, setShow] = useState(false);
   const {
     control,
     handleSubmit,
@@ -56,13 +58,17 @@ export const SignInForm = () => {
         control={control}
         render={({ field }) => (
           <Input
+            type={show ? "text" : "password"}
             label="Password"
             required
             placeholder="Пароль"
-            rightSlot={<PasswordShow />}
+            rightSlot={<PasswordShow onClick={() => setShow(!show)} />}
             value={field.value}
             onChange={field.onChange}
             error={errors.password?.message}
+            classNames={{
+              rightSlotClassName: "cursor-pointer",
+            }}
           />
         )}
       />
