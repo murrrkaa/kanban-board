@@ -19,4 +19,5 @@ export interface IInputProps {
   leftSlot?: ReactNode;
   disabled?: boolean;
   error?: string;
+  type?: string;
 }

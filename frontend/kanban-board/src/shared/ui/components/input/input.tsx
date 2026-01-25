@@ -25,6 +25,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       id,
       disabled,
       error,
+      type = "text",
     },
     ref,
   ) => {
@@ -80,6 +81,7 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
             )}
             disabled={disabled}
             aria-required={required}
+            type={type}
           />
           {rightSlot && (
             <span
