@@ -1,7 +1,7 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Dashboard } from "../models/Dashboard.js";
 
-export const getDashboards = requestHandler(async (req, res) => {
+export const getDashboards = requestHandler(async (req) => {
   const { projectId: id_project, boardName, boardId: id_dashboard } = req.query;
 
   const result = await Dashboard.getDashboards({
@@ -27,7 +27,7 @@ export const getDashboards = requestHandler(async (req, res) => {
   };
 });
 
-export const createDashboard = requestHandler(async (req, res) => {
+export const createDashboard = requestHandler(async (req) => {
   const data = await Dashboard.createDashboard(req.body);
 
   return {
@@ -36,7 +36,7 @@ export const createDashboard = requestHandler(async (req, res) => {
   };
 });
 
-export const deleteDashboard = requestHandler(async (req, res) => {
+export const deleteDashboard = requestHandler(async (req) => {
   const { id: id_dashboard } = req.params;
   const data = await Dashboard.deleteDashboard(id_dashboard);
   return {
@@ -45,7 +45,7 @@ export const deleteDashboard = requestHandler(async (req, res) => {
   };
 });
 
-export const getDashboard = requestHandler(async (req, res) => {
+export const getDashboard = requestHandler(async (req) => {
   const { id: id_dashboard } = req.params;
   const result = await Dashboard.getDashboard(id_dashboard);
 
@@ -66,7 +66,7 @@ export const getDashboard = requestHandler(async (req, res) => {
   };
 });
 
-export const updateDashboard = requestHandler(async (req, res) => {
+export const updateDashboard = requestHandler(async (req) => {
   const { id: id_dashboard } = req.params;
   const form = {
     id_dashboard,

@@ -1,4 +1,6 @@
-export const objectToQueryString = (filters?: Record<string, any>): string => {
+export const objectToQueryString = (
+  filters?: Record<string, unknown>,
+): string => {
   const queryString = Object.keys(filters ?? {})
     .map((key: string) => {
       const value = filters?.[key];

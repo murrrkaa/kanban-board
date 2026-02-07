@@ -34,7 +34,7 @@ export const BoardColumn: FC<IProp> = ({ column }) => {
       </div>
       <div className="mt-[20px] flex flex-col gap-[20px]">
         {tasks?.map((task) => (
-          <BoardTaskCard task={task} />
+          <BoardTaskCard task={task} key={task.id} />
         ))}
       </div>
     </div>

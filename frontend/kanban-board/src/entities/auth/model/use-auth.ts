@@ -11,7 +11,8 @@ export const useAuth = () => {
   const checkAuth = async () => {
     const user = await getAuthUser();
     useAuthStore.getState().setUser(user);
-    useRolesStore.getState().getRoles();
+    if (user) useRolesStore.getState().getRoles();
+
     if (!user) logout();
   };
 

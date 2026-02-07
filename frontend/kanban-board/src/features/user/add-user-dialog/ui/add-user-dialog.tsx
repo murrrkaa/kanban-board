@@ -1,6 +1,7 @@
 import { Sheet } from "@shared/ui/components/sheet";
 import {
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@shared/ui/components/sheet/sheet.tsx";
@@ -18,6 +19,7 @@ export const AddUserDialog = () => {
   return (
     <Sheet open={openAddDialog} onOpenChange={setOpenAddDialog}>
       <SheetTitle></SheetTitle>
+      <SheetDescription></SheetDescription>
       <SheetContent className="bg-white">
         <SheetHeader>Добавление пользователя</SheetHeader>
         <AddUserForm />

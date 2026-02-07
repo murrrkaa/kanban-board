@@ -22,14 +22,13 @@ export const Input = forwardRef<HTMLInputElement, IInputProps>(
       inputSize = "medium",
       rightSlot,
       leftSlot,
-      id,
       disabled,
       error,
       type = "text",
     },
     ref,
   ) => {
-    const inputId = id ?? useId();
+    const inputId = useId();
 
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
       onChange?.(e);

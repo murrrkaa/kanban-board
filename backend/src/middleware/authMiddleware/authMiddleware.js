@@ -13,7 +13,7 @@ export const authMiddleware = (req, res, next) => {
     const userPayload = jwt.verify(token, process.env.SECRET_KEY);
     req.user = userPayload;
     next();
-  } catch (err) {
+  } catch {
     throw { status: 403, message: "Неверный или просроченный токен" };
   }
 };

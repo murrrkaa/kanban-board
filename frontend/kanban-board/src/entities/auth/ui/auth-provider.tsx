@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useLayoutEffect(() => {
     checkAuth().finally(() => setIsLoading(false));
-  }, []);
+  }, [checkAuth]);
 
   return !isLoading && <>{children}</>;
 };

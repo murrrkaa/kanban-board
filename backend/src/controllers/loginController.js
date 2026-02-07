@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Role } from "../models/Role.js";
 
-export const loginUser = requestHandler(async (req, res) => {
+export const loginUser = requestHandler(async (req) => {
   const { login, password } = req.body;
   const user = await User.getUserByLogin(login);
   const roleUser = await Role.getRole(user.id_role);

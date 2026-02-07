@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "@shared/ui/components/table";
 import {
-  type Cell,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -17,8 +16,8 @@ import { columns } from "@widgets/tasks/tasks-table/model/columns.tsx";
 import { type FC, useEffect } from "react";
 import { useGetTasks } from "@entities/board/board-column/model/use-get-tasks.tsx";
 import { useTaskStore } from "@entities/task/model/useTaskStore.tsx";
-import type { ITask } from "@entities/task/model/types.ts";
 import { cn } from "@shared/lib/cn.ts";
+import type { IColumnMeta } from "@shared/model/column-meta.ts";
 
 interface IProps {
   taskName: string;
@@ -51,7 +50,7 @@ export const TasksTable: FC<IProps> = ({ taskName }) => {
                 key={header.id}
                 className={cn(
                   "pl-[10px]",
-                  (header.column.columnDef.meta as any)?.className,
+                  (header.column.columnDef.meta as IColumnMeta)?.className,
                 )}
               >
                 {flexRender(
@@ -65,7 +64,7 @@ export const TasksTable: FC<IProps> = ({ taskName }) => {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell: Cell<ITask, any>) => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="p-[10px]">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>

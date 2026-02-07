@@ -12,13 +12,11 @@ import { useUsersStore } from "@entities/user/model/use-users-store.tsx";
 import { type FC, useEffect } from "react";
 import { convertUsersDto } from "@entities/user/model/convert-users-dto.ts";
 import {
-  type Cell,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "@widgets/users/user-table/model/columns.tsx";
-import type { IUser } from "@entities/auth/model/types.ts";
 
 interface IProps {
   searchName: string;
@@ -61,7 +59,7 @@ export const UserTable: FC<IProps> = ({ searchName }) => {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell: Cell<IUser, any>) => (
+              {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id} className="p-[10px]">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>

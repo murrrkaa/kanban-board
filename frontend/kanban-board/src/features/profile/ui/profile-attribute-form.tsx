@@ -51,7 +51,7 @@ export const ProfileAttributeForm: FC<IProps> = ({ userInfo }) => {
         surname: userInfo.surname,
       });
     }
-  }, [userInfo, rolesList]);
+  }, [userInfo, rolesList, reset]);
 
   return (
     <div className="w-full py-[25px] px-[30px] mt-[20px] flex flex-col">

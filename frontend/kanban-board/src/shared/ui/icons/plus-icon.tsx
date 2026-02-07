@@ -9,16 +9,16 @@ export const PlusIcon: FC<IIconProps> = (props) => {
           <path
             d="M12.0028 7.21899V16.7815"
             stroke="#4318FF"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
           <path
             d="M17.0654 12.0002H6.94037"
             stroke="#4318FF"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </g>
       </g>

@@ -18,7 +18,7 @@ export const useRolesStore = create<IRolesStore>((set) => ({
             name: role?.name,
           })),
         )
-        .catch((err) => console.log(err))) ?? [];
+        .catch(() => {})) ?? [];
     set({
       roles,
     });

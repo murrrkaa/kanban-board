@@ -2,6 +2,7 @@ import { useShallow } from "zustand/react/shallow";
 import { Sheet } from "@shared/ui/components/sheet";
 import {
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@shared/ui/components/sheet/sheet.tsx";
@@ -18,6 +19,7 @@ export const AddBoardDialog = () => {
   return (
     <Sheet open={openAddDialog} onOpenChange={setOpenAddDialog}>
       <SheetTitle></SheetTitle>
+      <SheetDescription></SheetDescription>
       <SheetContent className="bg-white">
         <SheetHeader>Создание новой доски</SheetHeader>
         <AddBoardForm />

@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@shared/ui/components/sheet/sheet.tsx";
@@ -19,6 +20,7 @@ export const CommentTaskDialog = () => {
   return (
     <Sheet open={openAddDialog} onOpenChange={setOpenAddDialog}>
       <SheetTitle></SheetTitle>
+      <SheetDescription></SheetDescription>
       <SheetContent className="bg-white">
         <SheetHeader>Комментарии</SheetHeader>
         <div className="h-full">
