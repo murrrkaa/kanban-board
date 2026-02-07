@@ -1,6 +1,7 @@
 import { Sheet } from "@shared/ui/components/sheet";
 import {
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@shared/ui/components/sheet/sheet.tsx";
@@ -18,6 +19,7 @@ export const EditTaskModal = () => {
   return (
     <Sheet open={open} onOpenChange={setOpenDialog}>
       <SheetTitle></SheetTitle>
+      <SheetDescription></SheetDescription>
       <SheetContent className="bg-white">
         <SheetHeader>Редактирование задачи</SheetHeader>
         <EditTaskForm />

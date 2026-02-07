@@ -1,1 +1,1 @@
-export { Button, buttonVariants } from "./button.tsx";
+export { Button } from "./button.tsx";

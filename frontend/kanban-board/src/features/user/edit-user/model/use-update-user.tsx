@@ -4,8 +4,10 @@ import type { IEditUserFormData } from "@features/user/edit-user/model/types.ts"
 import { transformToBack } from "@entities/user/model/transform-to-back.ts";
 import { putUser } from "@entities/user/model/put-user.ts";
 import { useUserDialogStore } from "@entities/user/model/use-user-dialog-store.tsx";
+import type { UseFormSetError } from "react-hook-form";
+import type { IError } from "@shared/model/error-type.ts";
 
-export const useUpdateUser = (setError: any) => {
+export const useUpdateUser = (setError: UseFormSetError<IEditUserFormData>) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [RoutesEnum.USERS],
@@ -23,7 +25,7 @@ export const useUpdateUser = (setError: any) => {
       });
       useUserDialogStore.getState().setOpenEditDialog(false);
     },
-    onError: (e: any) => {
+    onError: (e: IError) => {
       if (e.status === 409)
         setError("login", {
           message: e.error,

@@ -1,7 +1,7 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Comment } from "../models/Comment.js";
 
-export const getComments = requestHandler(async (req, res) => {
+export const getComments = requestHandler(async (req) => {
   const { id: id_task } = req.params;
   const data = await Comment.getComments(id_task);
   return {
@@ -10,7 +10,7 @@ export const getComments = requestHandler(async (req, res) => {
   };
 });
 
-export const createComment = requestHandler(async (req, res) => {
+export const createComment = requestHandler(async (req) => {
   const form = {
     content: req.body.content,
     id_task: req.body.taskId,
@@ -23,7 +23,7 @@ export const createComment = requestHandler(async (req, res) => {
   };
 });
 
-export const deleteComment = requestHandler(async (req, res) => {
+export const deleteComment = requestHandler(async (req) => {
   const { id: id_comment } = req.params;
   const data = await Comment.deleteComment(id_comment);
   return {

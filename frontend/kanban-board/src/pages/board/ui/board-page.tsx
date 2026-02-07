@@ -21,7 +21,7 @@ export const BoardPage = () => {
       <PageWrapper title={board?.name ?? "Board"}>
         <div className="w-full h-[calc(100vh-140px)] grid grid-cols-[1fr_1fr_1fr] gap-4">
           {board?.columns?.map((column) => (
-            <BoardColumn column={column} />
+            <BoardColumn column={column} key={column.id} />
           ))}
         </div>
       </PageWrapper>

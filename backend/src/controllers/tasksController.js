@@ -1,7 +1,7 @@
 import { requestHandler } from "../helpers/requestHandler.js";
 import { Task } from "../models/Task.js";
 
-export const getTasks = requestHandler(async (req, res) => {
+export const getTasks = requestHandler(async (req) => {
   const { boardColumnId: id_board_column, taskName } = req.query;
   const data = await Task.getTasks({
     id_board_column,
@@ -13,7 +13,7 @@ export const getTasks = requestHandler(async (req, res) => {
   };
 });
 
-export const getTask = requestHandler(async (req, res) => {
+export const getTask = requestHandler(async (req) => {
   const { id: id_task } = req.params;
   const data = await Task.getTask(id_task);
   return {
@@ -22,7 +22,7 @@ export const getTask = requestHandler(async (req, res) => {
   };
 });
 
-export const deleteTask = requestHandler(async (req, res) => {
+export const deleteTask = requestHandler(async (req) => {
   const { id: id_task } = req.params;
   const data = await Task.deleteTask(id_task);
   return {
@@ -31,7 +31,7 @@ export const deleteTask = requestHandler(async (req, res) => {
   };
 });
 
-export const createTask = requestHandler(async (req, res) => {
+export const createTask = requestHandler(async (req) => {
   const transformedData = {
     name: req.body.name,
     priority: req.body.priority,
@@ -48,7 +48,7 @@ export const createTask = requestHandler(async (req, res) => {
   };
 });
 
-export const updateTask = requestHandler(async (req, res) => {
+export const updateTask = requestHandler(async (req) => {
   const form = {
     name: req.body.name,
     priority: req.body.priority,

@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { cn } from "@shared/lib/cn.ts";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -12,7 +13,10 @@ const DropdownMenuContent = React.forwardRef<
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className="z-50 min-w-[8rem] overflow-hidden rounded-md bg-white shadow-md animate-in fade-in-80"
+      className={cn(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md bg-white shadow-md animate-in fade-in-80",
+        className,
+      )}
       {...props}
     />
   </DropdownMenuPrimitive.Portal>
@@ -25,7 +29,10 @@ const DropdownMenuItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className="relative flex cursor-default select-none items-center rounded-sm px-4 py-2 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-4 py-2 text-sm outline-none transition-colors focus:bg-slate-100 focus:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className,
+    )}
     {...props}
   />
 ));

@@ -1,6 +1,7 @@
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@shared/ui/components/sheet/sheet.tsx";
@@ -18,6 +19,7 @@ export const EditProjectModal = () => {
   return (
     <Sheet open={open} onOpenChange={setOpenDialog}>
       <SheetTitle></SheetTitle>
+      <SheetDescription></SheetDescription>
       <SheetContent className="bg-white">
         <SheetHeader>Редактирование проекта</SheetHeader>
         <EditProjectForm />

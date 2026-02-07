@@ -2,7 +2,7 @@ import { User } from "../models/User.js";
 import { requestHandler } from "../helpers/requestHandler.js";
 import bcrypt from "bcrypt";
 
-export const getUsers = requestHandler(async (req, res) => {
+export const getUsers = requestHandler(async (req) => {
   const { searchName } = req.query;
 
   const data = await User.getUsers({ searchName });
@@ -12,7 +12,7 @@ export const getUsers = requestHandler(async (req, res) => {
   };
 });
 
-export const createUser = requestHandler(async (req, res) => {
+export const createUser = requestHandler(async (req) => {
   const existingUser = await User.getUserByLogin(req.body.login).catch(
     () => {},
   );
@@ -36,7 +36,7 @@ export const createUser = requestHandler(async (req, res) => {
   };
 });
 
-export const deleteUser = requestHandler(async (req, res) => {
+export const deleteUser = requestHandler(async (req) => {
   const { id: id_user } = req.params;
   const data = await User.deleteUser(id_user);
   return {
@@ -45,7 +45,7 @@ export const deleteUser = requestHandler(async (req, res) => {
   };
 });
 
-export const getUser = requestHandler(async (req, res) => {
+export const getUser = requestHandler(async (req) => {
   const { id: id_user } = req.params;
   const data = await User.getUser(id_user);
   return {
@@ -54,7 +54,7 @@ export const getUser = requestHandler(async (req, res) => {
   };
 });
 
-export const updateUser = requestHandler(async (req, res) => {
+export const updateUser = requestHandler(async (req) => {
   const existingUser = await User.getUserByLogin(req.body.login).catch(
     () => {},
   );

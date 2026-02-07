@@ -7,7 +7,9 @@ import { convertUserDto } from "@entities/auth/model/convert-user-dto.ts";
 export const getAuthUser = async (): Promise<IUser | null> => {
   try {
     const token = getAccessToken();
-    const payload: IPayload = jwtDecode(token ?? "");
+    if (!token) return null;
+
+    const payload: IPayload = jwtDecode(token);
 
     const userDto = await getUserById(payload.id);
 

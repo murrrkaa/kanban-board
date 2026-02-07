@@ -1,7 +1,7 @@
 import { Project } from "../models/Project.js";
 import { requestHandler } from "../helpers/requestHandler.js";
 
-export const getProjects = requestHandler(async (req, res) => {
+export const getProjects = requestHandler(async (req) => {
   const { projectName } = req.query;
   const result = await Project.getProjects({ projectName });
 
@@ -23,7 +23,7 @@ export const getProjects = requestHandler(async (req, res) => {
   };
 });
 
-export const createProject = requestHandler(async (req, res) => {
+export const createProject = requestHandler(async (req) => {
   const data = await Project.createProject(req.body);
   return {
     status: 201,
@@ -31,7 +31,7 @@ export const createProject = requestHandler(async (req, res) => {
   };
 });
 
-export const deleteProject = requestHandler(async (req, res) => {
+export const deleteProject = requestHandler(async (req) => {
   const { id: id_project } = req.params;
   const data = await Project.deleteProject(id_project);
   return {
@@ -40,7 +40,7 @@ export const deleteProject = requestHandler(async (req, res) => {
   };
 });
 
-export const getProject = requestHandler(async (req, res) => {
+export const getProject = requestHandler(async (req) => {
   const { id: id_project } = req.params;
   const data = await Project.getProject(id_project);
   return {
@@ -49,7 +49,7 @@ export const getProject = requestHandler(async (req, res) => {
   };
 });
 
-export const updateProject = requestHandler(async (req, res) => {
+export const updateProject = requestHandler(async (req) => {
   const { id: id_project } = req.params;
   const form = {
     id_project,
